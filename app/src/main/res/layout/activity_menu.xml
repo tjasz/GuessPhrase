@@ -1,0 +1,29 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.tjaz.guessphrase.MenuActivity">
+
+    <Button
+        android:id="@+id/newGameButton"
+        android:text="@string/newGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="newGame"
+        />
+
+    <Button
+        android:id="@+id/resumeGameButton"
+        android:text="@string/resumeGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="resumeGame"
+        />
+
+</LinearLayout>
