@@ -25,10 +25,6 @@
     <string name="category_sports_label">Sports</string>
     <string name="category_entertainment_label">Entertainment</string>
     <string name="category_dirty_label">Sex, Drugs, and Alcohol</string>
-    <string name="category_select_done_label">Done</string>
-    <string name="noCategoriesWarning">At least one category must be selected.</string>
-    <string name="okay">OK</string>
-    <string name="cancel">Cancel</string>
 
     <string-array name="categoryAnimals">
 

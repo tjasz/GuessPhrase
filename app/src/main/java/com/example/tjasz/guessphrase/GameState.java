@@ -3,7 +3,6 @@ package com.example.tjasz.guessphrase;
 import android.content.Context;
 import android.os.CountDownTimer;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,17 +37,7 @@ public class GameState {
     Context myContext;
     GameHandler myGameHandler;
 
-    private static final int[] categoryIDs = {
-            R.array.categoryOriginal,
-            R.array.categoryAnimals,
-            R.array.categoryFood,
-            R.array.categoryUnitedStates,
-            R.array.categoryGeography,
-            R.array.categorySports,
-            R.array.categoryEntertainment,
-            R.array.categoryDirty
-    };
-    boolean[] categoryBools;
+    int categoryResourceId;
 
     public GameState(Context context, GameHandler gameHandler) {
         myContext = context;
@@ -80,17 +69,6 @@ public class GameState {
     // get a random item from the items list
     public String getNextItem() {
         return items.get(generator.nextInt(items.size()));
-    }
-
-    // populate the items ArrayList based on the values of categoryBools
-    private void populateItems() {
-        items = new ArrayList<>();
-        for (int i = 0; i < categoryBools.length; i++) {
-            if (categoryBools[i]) {
-                String[] candidates = myContext.getResources().getStringArray(categoryIDs[i]);
-                items.addAll(Arrays.asList(candidates));
-            }
-        }
     }
 
     // restore a game from the save file
@@ -125,12 +103,9 @@ public class GameState {
             t1score = gameState.getInt("t1score");
             t2score = gameState.getInt("t2score");
             millisLeft = gameState.getLong("millisLeft");
-            JSONArray json_category_bools = gameState.getJSONArray("categoryBools");
-            categoryBools = new boolean[json_category_bools.length()];
-            for (int i = 0; i < json_category_bools.length(); i++) {
-                categoryBools[i] = json_category_bools.getBoolean(i);
-            }
-            populateItems();
+            categoryResourceId = gameState.getInt("categoryResourceId");
+            items =  new ArrayList(Arrays.asList(
+                    myContext.getResources().getStringArray(categoryResourceId)));
         }
         catch (JSONException e) {
             throw new RuntimeException(e);
@@ -138,12 +113,13 @@ public class GameState {
     }
 
     // load a new game with categoryBools as given
-    public void loadNewGame(boolean[] newCategoryBools) {
+    public void loadNewGame(int newCategoryResourceId) {
         t1score = 0;
         t2score = 0;
         millisLeft = defaultTime;
-        categoryBools = newCategoryBools;
-        populateItems();
+        categoryResourceId = newCategoryResourceId;
+        items =  new ArrayList(Arrays.asList(
+                myContext.getResources().getStringArray(categoryResourceId)));
     }
 
     // save the game state to the save file
@@ -154,11 +130,7 @@ public class GameState {
             gameState.put("t1score", t1score);
             gameState.put("t2score", t2score);
             gameState.put("millisLeft", millisLeft);
-            JSONArray json_category_bools = new JSONArray();
-            for (boolean categoryBool : categoryBools) {
-                json_category_bools.put(categoryBool);
-            }
-            gameState.put("categoryBools", json_category_bools);
+            gameState.put("categoryResourceId", categoryResourceId);
         }
         catch (JSONException e) {
             throw new RuntimeException(e);

@@ -42,8 +42,8 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
             gameState.restoreGame();
         }
         else {
-            boolean[] categoryBools = intent.getBooleanArrayExtra("categoryBools");
-            gameState.loadNewGame(categoryBools);
+            int categoryResourceId = intent.getIntExtra("categoryResourceId", R.array.categoryOriginal);
+            gameState.loadNewGame(categoryResourceId);
         }
         updateDisplay();
         gameState.resumeTimer();

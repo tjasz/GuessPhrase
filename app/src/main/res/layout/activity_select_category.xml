@@ -21,69 +21,68 @@
             android:text="@string/select_category"
             />
 
-        <CheckBox
-            android:id="@+id/generalCategoryCheckbox"
+        <Button
+            android:id="@+id/generalCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_general_label"
             />
 
-        <CheckBox
-            android:id="@+id/animalCategoryCheckbox"
+        <Button
+            android:id="@+id/animalCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_animals_label"
             />
 
-        <CheckBox
-            android:id="@+id/foodCategoryCheckbox"
+        <Button
+            android:id="@+id/foodCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_food_label"
             />
 
-        <CheckBox
-            android:id="@+id/unitedStatesCategoryCheckbox"
+        <Button
+            android:id="@+id/unitedStatesCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_united_states_label"
             />
 
-        <CheckBox
-            android:id="@+id/geographyCategoryCheckbox"
+        <Button
+            android:id="@+id/geographyCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_geography_label"
             />
 
-        <CheckBox
-            android:id="@+id/sportsCategoryCheckbox"
+        <Button
+            android:id="@+id/sportsCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_sports_label"
             />
 
-        <CheckBox
-            android:id="@+id/entertainmentCategoryCheckbox"
+        <Button
+            android:id="@+id/entertainmentCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_entertainment_label"
             />
 
-        <CheckBox
-            android:id="@+id/dirtyCategoryCheckbox"
+        <Button
+            android:id="@+id/dirtyCategoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onCategorySelected"
             android:text="@string/category_dirty_label"
-            />
-
-        <Button
-            android:id="@+id/categorySelectDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="onSelectCategoryDonePressed"
-            android:text="@string/category_select_done_label"
             />
 
     </LinearLayout>
