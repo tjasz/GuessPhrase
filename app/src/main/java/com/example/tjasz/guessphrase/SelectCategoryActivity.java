@@ -10,15 +10,6 @@ import android.widget.CheckBox;
 
 
 public class SelectCategoryActivity extends ActionBarActivity {
-    String[] generalItems;
-    String[] animalItems;
-    String[] foodItems;
-    String[] unitedStatesItems;
-    String[] geographyItems;
-    String[] sportsItems;
-    String[] entertainmentItems;
-    String[] dirtyItems;
-
     CheckBox generalCategoryCheckbox;
     CheckBox animalCategoryCheckbox;
     CheckBox foodCategoryCheckbox;
