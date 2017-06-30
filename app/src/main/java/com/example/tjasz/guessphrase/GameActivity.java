@@ -174,7 +174,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         if (gameState.getIsTimerRunning()) {
             gameState.pauseTimer();
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            mainText.setVisibility(View.INVISIBLE);
+            mainText.setText("");
         }
         else {
             gameState.resumeTimer();
@@ -205,7 +205,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
     public void onPause() {
         visible = false;
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mainText.setVisibility(View.INVISIBLE);
+        mainText.setText("");
         if (gameState != null) {
             gameState.pauseTimer();
             new SaveGameTask().execute();
