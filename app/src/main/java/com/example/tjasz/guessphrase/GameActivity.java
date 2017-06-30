@@ -37,19 +37,28 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+        // disable game control buttons until items load
+        mainText.setClickable(false);
+        timerText.setClickable(false);
+        mainText.setVisibility(View.INVISIBLE);
+
         Intent intent = getIntent();
         if (intent.getBooleanExtra("resumingGame", false)) {
-            gameState.restoreGame();
+            gameState.restoreAndStartGame();
         }
         else {
             int categoryResourceId = intent.getIntExtra("categoryResourceId", R.array.categoryOriginal);
-            gameState.loadNewGame(categoryResourceId);
+            gameState.loadAndStartNewGame(categoryResourceId);
         }
-        updateDisplay();
-        gameState.resumeTimer();
+        //gameState.resumeTimer();
     }
 
     private void updateDisplay() {
+        // enable game control buttons
+        mainText.setClickable(true);
+        timerText.setClickable(true);
+        mainText.setVisibility(View.VISIBLE);
+        // update scores, item text
         t1scoreText.setText(String.valueOf(gameState.getT1score()));
         t2scoreText.setText(String.valueOf(gameState.getT2score()));
         mainText.setText(gameState.getNextItem());
@@ -77,6 +86,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
             vibrator.vibrate(100);
         }
         // update display
+        updateDisplay();
         timerText.setTextColor(Color.BLACK);
         mainText.setTextColor(Color.BLACK);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -126,7 +136,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         if (gameState.getIsTimerRunning()) {
             gameState.pauseTimer();
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            mainText.setText("");
+            mainText.setVisibility(View.INVISIBLE);
         }
         else {
             gameState.resumeTimer();
@@ -137,7 +147,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
     public void onPause() {
         gameState.pauseTimer();
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mainText.setText("");
+        mainText.setVisibility(View.INVISIBLE);
         gameState.saveGameToFile();
         super.onPause();
     }

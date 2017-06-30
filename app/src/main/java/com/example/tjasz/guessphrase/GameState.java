@@ -1,6 +1,7 @@
 package com.example.tjasz.guessphrase;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 
 import org.json.JSONException;
@@ -72,7 +73,7 @@ public class GameState {
     }
 
     // restore a game from the save file
-    public void restoreGame() {
+    public void restoreAndStartGame() {
         // read game state from save file
         String saveString = "";
         BufferedReader reader = null;
@@ -104,8 +105,7 @@ public class GameState {
             t2score = gameState.getInt("t2score");
             millisLeft = gameState.getLong("millisLeft");
             categoryResourceId = gameState.getInt("categoryResourceId");
-            items =  new ArrayList(Arrays.asList(
-                    myContext.getResources().getStringArray(categoryResourceId)));
+            new LoadItemsTask().execute(categoryResourceId);
         }
         catch (JSONException e) {
             throw new RuntimeException(e);
@@ -113,13 +113,33 @@ public class GameState {
     }
 
     // load a new game with categoryBools as given
-    public void loadNewGame(int newCategoryResourceId) {
+    public void loadAndStartNewGame(int newCategoryResourceId) {
         t1score = 0;
         t2score = 0;
         millisLeft = defaultTime;
         categoryResourceId = newCategoryResourceId;
-        items =  new ArrayList(Arrays.asList(
-                myContext.getResources().getStringArray(categoryResourceId)));
+        new LoadItemsTask().execute(categoryResourceId);
+    }
+
+    class LoadItemsTask extends AsyncTask<Integer, Void, ArrayList<String>> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected ArrayList<String> doInBackground(Integer... resID) {
+            ArrayList<String> result;
+            result = new ArrayList(Arrays.asList(
+                    myContext.getResources().getStringArray(resID[0])));
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            items = result;
+            resumeTimer();
+        }
     }
 
     // save the game state to the save file
