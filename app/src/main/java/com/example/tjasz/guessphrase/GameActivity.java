@@ -204,7 +204,10 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         @Override
         protected void onPostExecute(Void result) {
             Toast.makeText(myContext, R.string.gameSaved, Toast.LENGTH_SHORT).show();
-            // TODO tell MenuActivity to enable "Resume Game" button once saved
+            // tell MenuActivity to enable "Resume Game" button once save is complete
+            Intent intent = new Intent();
+            intent.setAction(MenuActivity.GAME_SAVE_COMPLETED_ACTION);
+            sendBroadcast(intent);
         }
     }
 
