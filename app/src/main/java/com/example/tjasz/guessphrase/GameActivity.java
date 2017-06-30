@@ -193,7 +193,6 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         protected void onPreExecute() {
             File game_save_file = getFileStreamPath(getResources().getString(R.string.game_save_file_name));
             game_save_file.delete();
-            Toast.makeText(myContext, R.string.savingGame, Toast.LENGTH_SHORT).show();
         }
 
         @Override

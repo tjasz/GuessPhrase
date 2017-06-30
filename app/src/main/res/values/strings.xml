@@ -6,7 +6,6 @@
     <string name="title_activity_menu">Start Game</string>
     <string name="newGame">New Game</string>
     <string name="resumeGame">Resume Game</string>
-    <string name="savingGame">Saving Game...</string>
     <string name="gameSaved">Game Saved.</string>
     <string name="title_activity_select_category">Category Selection</string>
     <string name="getwinner_prompt">Who won this round?</string>
