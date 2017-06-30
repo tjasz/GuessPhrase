@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.media.AudioManager;
 import android.os.Vibrator;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -182,11 +183,17 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
     }
 
     private class SaveGameTask extends AsyncTask<Void, Void, Void> {
+        Context myContext;
+
+        SaveGameTask(Context context) {
+            myContext = context;
+        }
 
         @Override
         protected void onPreExecute() {
             File game_save_file = getFileStreamPath(getResources().getString(R.string.game_save_file_name));
             game_save_file.delete();
+            Toast.makeText(myContext, R.string.savingGame, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -197,6 +204,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
 
         @Override
         protected void onPostExecute(Void result) {
+            Toast.makeText(myContext, R.string.gameSaved, Toast.LENGTH_SHORT).show();
             // TODO tell MenuActivity to enable "Resume Game" button once saved
         }
     }
@@ -208,7 +216,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         mainText.setText("");
         if (gameState != null) {
             gameState.pauseTimer();
-            new SaveGameTask().execute();
+            new SaveGameTask(this).execute();
         }
         super.onPause();
     }
