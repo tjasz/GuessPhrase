@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.os.Vibrator;
 
 public class GameActivity extends ActionBarActivity implements GameHandler {
 
+    boolean visible;
     TextView mainText, t1scoreText, t2scoreText, timerText;
     private static final int T1COLOR = Color.rgb(0,128,0);
     private static final int T2COLOR = Color.rgb(0,0,128);
@@ -33,7 +35,6 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         t2scoreText = (TextView) findViewById(R.id.t2score);
         timerText = (TextView) findViewById(R.id.timer);
 
-        gameState = new GameState(this, this);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -42,15 +43,44 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         timerText.setClickable(false);
         mainText.setVisibility(View.INVISIBLE);
 
-        Intent intent = getIntent();
-        if (intent.getBooleanExtra("resumingGame", false)) {
-            gameState.restoreAndStartGame();
+        new LoadAndStartGameTask(this, this).execute(getIntent());
+    }
+
+    private class LoadAndStartGameTask extends AsyncTask<Intent, Void, GameState> {
+        Context myContext;
+        GameHandler myGameHandler;
+
+        LoadAndStartGameTask(Context context, GameHandler gameHandler) {
+            myContext = context;
+            myGameHandler = gameHandler;
         }
-        else {
-            int categoryResourceId = intent.getIntExtra("categoryResourceId", R.array.categoryOriginal);
-            gameState.loadAndStartNewGame(categoryResourceId);
+
+        @Override
+        protected void onPreExecute() {
+
         }
-        //gameState.resumeTimer();
+
+        @Override
+        protected GameState doInBackground(Intent... intents) {
+            GameState result = new GameState(myContext, myGameHandler);
+            if (intents[0].getBooleanExtra("resumingGame", false)) {
+                result.restoreGame();
+            }
+            else {
+                int categoryResourceId = intents[0].getIntExtra("categoryResourceId", R.array.categoryOriginal);
+                result.loadNewGame(categoryResourceId);
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(GameState result) {
+            // re-enable game control buttons now that items have loaded
+            gameState = result;
+            if (visible) {
+                gameState.resumeTimer();
+            }
+        }
     }
 
     private void updateDisplay() {
@@ -145,11 +175,20 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
 
     @Override
     public void onPause() {
-        gameState.pauseTimer();
+        visible = false;
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mainText.setVisibility(View.INVISIBLE);
-        gameState.saveGameToFile();
+        if (gameState != null) {
+            gameState.pauseTimer();
+            gameState.saveGameToFile();
+        }
         super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        visible = true;
     }
 
     public void nextItem(View v) {
