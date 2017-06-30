@@ -13,6 +13,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.media.AudioManager;
 import android.os.Vibrator;
+import android.widget.Toast;
+
+import java.io.File;
 
 
 public class GameActivity extends ActionBarActivity implements GameHandler {
@@ -173,6 +176,26 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         }
     }
 
+    private class SaveGameTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            File game_save_file = getFileStreamPath(getResources().getString(R.string.game_save_file_name));
+            game_save_file.delete();
+        }
+
+        @Override
+        protected Void doInBackground(Void... v) {
+            gameState.saveGameToFile();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // TODO tell MenuActivity to enable "Resume Game" button once saved
+        }
+    }
+
     @Override
     public void onPause() {
         visible = false;
@@ -180,7 +203,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         mainText.setVisibility(View.INVISIBLE);
         if (gameState != null) {
             gameState.pauseTimer();
-            gameState.saveGameToFile();
+            new SaveGameTask().execute();
         }
         super.onPause();
     }
