@@ -10,10 +10,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.media.AudioManager;
 import android.os.Vibrator;
-import android.widget.Toast;
 
 import java.io.File;
 
@@ -21,6 +21,7 @@ import java.io.File;
 public class GameActivity extends ActionBarActivity implements GameHandler {
 
     boolean visible;
+    RelativeLayout loadingWheel;
     TextView mainText, t1scoreText, t2scoreText, timerText;
     private static final int T1COLOR = Color.rgb(0,128,0);
     private static final int T2COLOR = Color.rgb(0,0,128);
@@ -33,6 +34,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        loadingWheel = (RelativeLayout) findViewById(R.id.loadingPanel);
         mainText = (TextView) findViewById(R.id.text_main);
         t1scoreText = (TextView) findViewById(R.id.t1score);
         t2scoreText = (TextView) findViewById(R.id.t2score);
@@ -45,6 +47,8 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         mainText.setClickable(false);
         timerText.setClickable(false);
         mainText.setVisibility(View.INVISIBLE);
+        loadingWheel.setVisibility(View.VISIBLE);
+
 
         new LoadAndStartGameTask(this, this).execute(getIntent());
     }
@@ -82,6 +86,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
             gameState = result;
             if (visible) {
                 gameState.resumeTimer();
+                loadingWheel.setVisibility(View.GONE);
             }
         }
     }
