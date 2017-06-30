@@ -114,9 +114,7 @@ public class GameState {
 
     // load a new game with categoryBools as given
     public void loadAndStartNewGame(int newCategoryResourceId) {
-        t1score = 0;
-        t2score = 0;
-        millisLeft = defaultTime;
+        resetGame();
         categoryResourceId = newCategoryResourceId;
         new LoadItemsTask().execute(categoryResourceId);
     }
