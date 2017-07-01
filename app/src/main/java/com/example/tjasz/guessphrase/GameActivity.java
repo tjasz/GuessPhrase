@@ -75,8 +75,8 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
                 result.restoreGame();
             }
             else {
-                int categoryResourceId = intents[0].getIntExtra("categoryResourceId", R.array.categoryOriginal);
-                result.loadNewGame(categoryResourceId);
+                String assetFilename = intents[0].getStringExtra("assetFilename");
+                result.loadNewGame(assetFilename);
             }
             return result;
         }

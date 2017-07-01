@@ -1,6 +1,7 @@
 package com.example.tjasz.guessphrase;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.CountDownTimer;
 
 import org.json.JSONException;
@@ -14,8 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -31,19 +30,21 @@ public class GameState {
     int t1score, t2score;
     long millisLeft;
 
-    ArrayList<String> items;
+    Category category;
     Random generator;
     CountDownTimer timer;
     Context myContext;
     GameHandler myGameHandler;
 
-    int categoryResourceId;
+    String assetFilename;
+    AssetManager assetManager;
 
     public GameState(Context context, GameHandler gameHandler) {
         myContext = context;
         myGameHandler = gameHandler;
         generator = new Random();
         isTimerRunning = false;
+        assetManager = myContext.getAssets();
     }
 
     public boolean getIsTimerRunning() {
@@ -68,7 +69,7 @@ public class GameState {
 
     // get a random item from the items list
     public String getNextItem() {
-        return items.get(generator.nextInt(items.size()));
+        return category.getRandomItem();
     }
 
     // restore a game from the save file
@@ -103,21 +104,33 @@ public class GameState {
             t1score = gameState.getInt("t1score");
             t2score = gameState.getInt("t2score");
             millisLeft = gameState.getLong("millisLeft");
-            categoryResourceId = gameState.getInt("categoryResourceId");
-            items = new ArrayList(Arrays.asList(
-                    myContext.getResources().getStringArray(categoryResourceId)));
+            assetFilename = gameState.getString("assetFilename");
         }
         catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        // load category from the asset file
+        try {
+            category = new Category();
+            category.readJSONFile(assetManager.open(assetFilename));
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     // load a new game with categoryBools as given
-    public void loadNewGame(int newCategoryResourceId) {
+    public void loadNewGame(String newAssetFilename) {
         resetGame();
-        categoryResourceId = newCategoryResourceId;
-        items = new ArrayList(Arrays.asList(
-                myContext.getResources().getStringArray(categoryResourceId)));
+        assetFilename = newAssetFilename;
+        // load category from the asset file
+        try {
+            category = new Category();
+            category.readJSONFile(assetManager.open(assetFilename));
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // save the game state to the save file
@@ -128,7 +141,7 @@ public class GameState {
             gameState.put("t1score", t1score);
             gameState.put("t2score", t2score);
             gameState.put("millisLeft", millisLeft);
-            gameState.put("categoryResourceId", categoryResourceId);
+            gameState.put("assetFilename", assetFilename);
         }
         catch (JSONException e) {
             throw new RuntimeException(e);

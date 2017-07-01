@@ -20,28 +20,28 @@ public class SelectCategoryActivity extends ActionBarActivity {
         // indicate the category resource ID based on the ID of the button pressed
         int vId = v.getId();
         if (vId == R.id.generalCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categoryOriginal);
+            intent.putExtra("assetFilename", "category/general.json");
         }
         else if (vId == R.id.animalCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categoryAnimals);
+            intent.putExtra("assetFilename", "category/animals.json");
         }
         else if (vId == R.id.foodCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categoryFood);
+            intent.putExtra("assetFilename", "category/food.json");
         }
         else if (vId == R.id.unitedStatesCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categoryUnitedStates);
+            intent.putExtra("assetFilename", "category/unitedStates.json");
         }
         else if (vId == R.id.geographyCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categoryGeography);
+            intent.putExtra("assetFilename", "category/geography.json");
         }
         else if (vId == R.id.sportsCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categorySports);
+            intent.putExtra("assetFilename", "category/sports.json");
         }
         else if (vId == R.id.entertainmentCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categoryEntertainment);
+            intent.putExtra("assetFilename", "category/entertainment.json");
         }
         else if (vId == R.id.dirtyCategoryButton) {
-            intent.putExtra("categoryResourceId", R.array.categoryDirty);
+            intent.putExtra("assetFilename", "category/dirty.json");
         }
         // start GameActivity
         intent.putExtra("resumingGame", false);
