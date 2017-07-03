@@ -16,7 +16,7 @@
     <string name="play_again">Play Again</string>
     <string name="T1name">Team 1</string>
     <string name="T2name">Team 2</string>
-    <string name="select_category">Select Categories:</string>
+    <string name="select_category">Select Category:</string>
     <string name="category_general_label">General</string>
     <string name="category_animals_label">Animals</string>
     <string name="category_food_label">Food</string>
