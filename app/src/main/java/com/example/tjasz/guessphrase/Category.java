@@ -24,6 +24,10 @@ public class Category {
         generator = new Random();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getRandomItem() {
         return items.get(generator.nextInt(items.size()));
     }
