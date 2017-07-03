@@ -24,6 +24,17 @@ public class Category {
         generator = new Random();
     }
 
+    public void setName(String newName) {
+        name = newName;
+    }
+
+    public void addItems(ArrayList<String> newItems) {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        items.addAll(newItems);
+    }
+
     public String getName() {
         return name;
     }
