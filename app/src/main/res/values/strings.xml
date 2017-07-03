@@ -26,4 +26,7 @@
     <string name="category_entertainment_label">Entertainment</string>
     <string name="category_dirty_label">Sex, Drugs, and Alcohol</string>
 
+    <string name="title_activity_add_category">Add Category</string>
+    <string name="action_add_category">Add Category</string>
+
 </resources>
