@@ -31,6 +31,11 @@ public class SelectCategoryActivity extends ActionBarActivity {
         pb = new ProgressBar(this);
         pb.setIndeterminate(true);
         ll.addView(pb);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         // load the categories and create buttons for them
         new LoadCategoriesTask().execute(this);
     }
