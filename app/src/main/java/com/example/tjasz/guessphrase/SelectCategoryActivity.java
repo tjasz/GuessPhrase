@@ -10,6 +10,10 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -54,6 +58,23 @@ public class SelectCategoryActivity extends ActionBarActivity {
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+            // also create a button for each category in the custom categories folder
+            File customCategoryDir = new File(getExternalFilesDir(null), "category");
+            String[] customCategoryFiles = customCategoryDir.list();
+            for (int i = 0; i < customCategoryFiles.length; i++) {
+                Category cat = new Category();
+                File file = new File(customCategoryDir, customCategoryFiles[i]);
+                try {
+                    FileInputStream fis = new FileInputStream(file);
+                    cat.readJSONFile(fis);
+                }
+                catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                CategoryButton newButton = new CategoryButton(params[0], "category/" + customCategoryFiles[i]);
+                newButton.setText(cat.getName());
+                result.add(newButton);
             }
             return result;
         }
