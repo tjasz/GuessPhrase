@@ -75,8 +75,9 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
                 result.restoreGame();
             }
             else {
-                String assetFilename = intents[0].getStringExtra("assetFilename");
-                result.loadNewGame(assetFilename);
+                String assetFilename = intents[0].getStringExtra("path");
+                boolean isCustom = intents[0].getBooleanExtra("isCustomCategory", false);
+                result.loadNewGame(isCustom, assetFilename);
             }
             return result;
         }

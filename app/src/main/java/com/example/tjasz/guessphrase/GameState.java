@@ -9,7 +9,9 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,7 +38,8 @@ public class GameState {
     Context myContext;
     GameHandler myGameHandler;
 
-    String assetFilename;
+    boolean isCustomCategory;
+    String categoryPath;
     AssetManager assetManager;
 
     public GameState(Context context, GameHandler gameHandler) {
@@ -104,7 +107,8 @@ public class GameState {
             t1score = gameState.getInt("t1score");
             t2score = gameState.getInt("t2score");
             millisLeft = gameState.getLong("millisLeft");
-            assetFilename = gameState.getString("assetFilename");
+            isCustomCategory = gameState.getBoolean("isCustomCategory");
+            categoryPath = gameState.getString("categoryPath");
         }
         catch (JSONException e) {
             throw new RuntimeException(e);
@@ -112,7 +116,20 @@ public class GameState {
         // load category from the asset file
         try {
             category = new Category();
-            category.readJSONFile(assetManager.open(assetFilename));
+            if (isCustomCategory) {
+                try {
+                    File dir = new File(myContext.getExternalFilesDir(null), "category");
+                    File file = new File(dir, categoryPath);
+                    FileInputStream fis = new FileInputStream(file);
+                    category.readJSONFile(fis);
+                }
+                catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                category.readJSONFile(assetManager.open("category/" + categoryPath));
+            }
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -120,13 +137,27 @@ public class GameState {
     }
 
     // load a new game with categoryBools as given
-    public void loadNewGame(String newAssetFilename) {
+    public void loadNewGame(boolean newIsCustom, String newCategoryPath) {
         resetGame();
-        assetFilename = newAssetFilename;
+        isCustomCategory = newIsCustom;
+        categoryPath = newCategoryPath;
         // load category from the asset file
         try {
             category = new Category();
-            category.readJSONFile(assetManager.open(assetFilename));
+            if (isCustomCategory) {
+                try {
+                    File dir = new File(myContext.getExternalFilesDir(null), "category");
+                    File file = new File(dir, categoryPath);
+                    FileInputStream fis = new FileInputStream(file);
+                    category.readJSONFile(fis);
+                }
+                catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                category.readJSONFile(assetManager.open("category/" + categoryPath));
+            }
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -141,7 +172,8 @@ public class GameState {
             gameState.put("t1score", t1score);
             gameState.put("t2score", t2score);
             gameState.put("millisLeft", millisLeft);
-            gameState.put("assetFilename", assetFilename);
+            gameState.put("isCustomCategory", isCustomCategory);
+            gameState.put("categoryPath", categoryPath);
         }
         catch (JSONException e) {
             throw new RuntimeException(e);

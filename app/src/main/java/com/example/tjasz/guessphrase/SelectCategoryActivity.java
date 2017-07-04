@@ -51,7 +51,7 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 for (int i = 0; i < assets.length; i++) {
                     Category cat = new Category();
                     cat.readJSONFile(am.open("category/" + assets[i]));
-                    CategoryButton newButton = new CategoryButton(params[0], "category/" + assets[i]);
+                    CategoryButton newButton = new CategoryButton(params[0], false, assets[i]);
                     newButton.setText(cat.getName());
                     result.add(newButton);
                 }
@@ -72,7 +72,7 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                CategoryButton newButton = new CategoryButton(params[0], "category/" + customCategoryFiles[i]);
+                CategoryButton newButton = new CategoryButton(params[0], true, customCategoryFiles[i]);
                 newButton.setText(cat.getName());
                 result.add(newButton);
             }

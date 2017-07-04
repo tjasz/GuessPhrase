@@ -8,12 +8,14 @@ import android.widget.Button;
 
 public class CategoryButton extends Button {
     Context myContext;
-    String assetPath;
+    boolean isCustom;
+    String path;
 
-    CategoryButton(Context context, String newAssetPath) {
+    CategoryButton(Context context, boolean newIsCustom, String newPath) {
         super(context);
         myContext = context;
-        assetPath = newAssetPath;
+        isCustom = newIsCustom;
+        path = newPath;
         // set the default display properties of the CategoryButton
         setEnabled(true);
         setLayoutParams(new ViewGroup.LayoutParams(
@@ -26,7 +28,8 @@ public class CategoryButton extends Button {
                 // create an intent to start the GameActivity
                 Intent intent = new Intent(myContext, GameActivity.class);
                 // indicate the category's file path
-                intent.putExtra("assetFilename", assetPath);
+                intent.putExtra("isCustomCategory", isCustom);
+                intent.putExtra("path", path);
                 // start GameActivity
                 intent.putExtra("resumingGame", false);
                 myContext.startActivity(intent);

@@ -79,14 +79,10 @@ public class AddCategoryActivity extends ActionBarActivity {
             String filename = cat.getName().replaceAll("[^A-Za-z0-9]", "_") + ".json";
             try {
                 File dir = new File(getExternalFilesDir(null), "category");
-                if (dir.mkdirs()) {
-                    File file = new File(dir, filename);
-                    FileOutputStream fos = new FileOutputStream(file);
-                    cat.writeJSONFile(fos);
-                }
-                else {
-                    throw new RuntimeException("Unable to create custom category directory.");
-                }
+                dir.mkdirs();
+                File file = new File(dir, filename);
+                FileOutputStream fos = new FileOutputStream(file);
+                cat.writeJSONFile(fos);
             }
             catch (FileNotFoundException e) {
                 e.printStackTrace();
