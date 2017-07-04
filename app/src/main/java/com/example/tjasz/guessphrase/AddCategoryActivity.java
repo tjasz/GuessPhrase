@@ -38,10 +38,13 @@ public class AddCategoryActivity extends ActionBarActivity {
             newEditText.setLayoutParams(lp);
             newEditText.setId(View.generateViewId());
             wikiBaseContainer.addView(newEditText);
+            newEditText.setFocusableInTouchMode(true);
+            newEditText.requestFocus();
+            lastWikiBase = newEditText;
+
             RelativeLayout.LayoutParams button_lp = (RelativeLayout.LayoutParams) addWikiBaseButton.getLayoutParams();
             button_lp.addRule(RelativeLayout.BELOW, newEditText.getId());
             addWikiBaseButton.setLayoutParams(button_lp);
-            lastWikiBase = newEditText;
         }
     }
 
