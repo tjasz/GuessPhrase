@@ -39,7 +39,10 @@ public class Wikipedia {
                     JSONArray links = page.getJSONArray("links");
                     for (int i = 0; i < links.length(); i++) {
                         JSONObject link = links.getJSONObject(i);
-                        linksList.add(link.getString("title"));
+                        String linkTitle = link.getString("title");
+                        if (linkTitle.split("\\s").length <= 3) {
+                            linksList.add(link.getString("title"));
+                        }
                     }
                 }
                 // continue query if necessary
