@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 public class Category {
@@ -28,7 +29,7 @@ public class Category {
         name = newName;
     }
 
-    public void addItems(ArrayList<String> newItems) {
+    public void addItems(Collection<String> newItems) {
         if (items == null) {
             items = new ArrayList<>();
         }

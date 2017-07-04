@@ -12,16 +12,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 public class Wikipedia {
     private static final String BASE_URI = "https://en.wikipedia.org/w/api.php?format=json";
 
-    public static ArrayList<String> getLinks(String pageName) {
+    public static HashSet<String> getLinks(String pageName) {
         boolean hasMore = true;
         String nextPage = null;
-        ArrayList<String> linksList = new ArrayList<>();
+        HashSet<String> linksList = new HashSet<>();
         try {
             while (hasMore) {
                 // form query string
