@@ -101,6 +101,17 @@ public class SelectCategoryActivity extends ActionBarActivity {
         }
     }
 
+    private boolean hasNetworkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+    private void openAddCategoryActivity() {
+        Intent intent = new Intent(SelectCategoryActivity.this, AddCategoryActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,12 +128,8 @@ public class SelectCategoryActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_category) {
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            boolean isConnected = activeNetwork != null && activeNetwork.isConnected();
-            if (isConnected) {
-                Intent intent = new Intent(SelectCategoryActivity.this, AddCategoryActivity.class);
-                startActivity(intent);
+            if (hasNetworkConnection()) {
+                openAddCategoryActivity();
             }
             else {
                 AlertDialog alertDialog = new AlertDialog.Builder(SelectCategoryActivity.this).create();
