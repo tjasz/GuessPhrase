@@ -18,6 +18,8 @@ import java.util.Random;
 
 public class Category {
     private String name;
+    boolean isCustom;
+    String path;
     private ArrayList<String> items;
     Random generator;
 
@@ -42,6 +44,22 @@ public class Category {
 
     public String getRandomItem() {
         return items.get(generator.nextInt(items.size()));
+    }
+
+    public void setIsCustom(boolean newIsCustom) {
+        isCustom = newIsCustom;
+    }
+
+    public boolean getIsCustom() {
+        return isCustom;
+    }
+
+    public void setPath(String newPath) {
+        path = newPath;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void readJSONFile(InputStream fis) {

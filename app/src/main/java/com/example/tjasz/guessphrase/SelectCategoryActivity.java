@@ -12,7 +12,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import java.io.File;
@@ -26,45 +29,66 @@ import java.util.ArrayList;
 public class SelectCategoryActivity extends ActionBarActivity {
     LinearLayout ll;
     ProgressBar pb;
+    CategoryReferenceAdapter adapter;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_category);
-        // add a loading wheel to the display while categories load
+
         ll = (LinearLayout) findViewById(R.id.categoryButtonsLayout);
+        pb = (ProgressBar) findViewById(R.id.loading_wheel);
+        adapter = new CategoryReferenceAdapter(this);
+        listView = (ListView) findViewById(R.id.category_list_view);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                Category cat = adapter.getItem(pos);
+
+                // create an intent to start the GameActivity
+                Intent intent = new Intent(SelectCategoryActivity.this, GameActivity.class);
+                // indicate the category's file path
+                intent.putExtra("isCustomCategory", cat.getIsCustom());
+                intent.putExtra("path", cat.getPath());
+                // start GameActivity
+                intent.putExtra("resumingGame", false);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         // load the categories and create buttons for them
-        ll.removeAllViews();
-        pb = new ProgressBar(this);
-        pb.setIndeterminate(true);
-        ll.addView(pb);
         new LoadCategoriesTask().execute(this);
     }
 
-    private class LoadCategoriesTask extends AsyncTask<SelectCategoryActivity, Void, ArrayList<CategoryButton>> {
+    private class LoadCategoriesTask extends AsyncTask<SelectCategoryActivity, Void, ArrayList<Category>> {
         @Override
         protected void onPreExecute() {
-
+            adapter.removeAll();
+            // add a loading wheel to the display while categories load
+            listView.setVisibility(View.INVISIBLE);
+            pb.setVisibility(View.VISIBLE);
         }
 
         @Override
-        protected ArrayList<CategoryButton> doInBackground(SelectCategoryActivity... params) {
+        protected ArrayList<Category> doInBackground(SelectCategoryActivity... params) {
             // create a button for each category in the assets folder
-            ArrayList<CategoryButton> result = new ArrayList<>();
+            ArrayList<Category> result = new ArrayList<>();
             AssetManager am = getAssets();
             try {
                 String[] assets = am.list("category");
                 for (int i = 0; i < assets.length; i++) {
                     Category cat = new Category();
+                    cat.setIsCustom(false);
+                    cat.setPath(assets[i]);
                     cat.readJSONFile(am.open("category/" + assets[i]));
-                    CategoryButton newButton = new CategoryButton(params[0], false, assets[i]);
-                    newButton.setText(cat.getName());
-                    result.add(newButton);
+                    result.add(cat);
                 }
             }
             catch (IOException e) {
@@ -75,6 +99,8 @@ public class SelectCategoryActivity extends ActionBarActivity {
             String[] customCategoryFiles = customCategoryDir.list();
             for (int i = 0; i < customCategoryFiles.length; i++) {
                 Category cat = new Category();
+                cat.setIsCustom(true);
+                cat.setPath(customCategoryFiles[i]);
                 File file = new File(customCategoryDir, customCategoryFiles[i]);
                 try {
                     FileInputStream fis = new FileInputStream(file);
@@ -83,21 +109,19 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                CategoryButton newButton = new CategoryButton(params[0], true, customCategoryFiles[i]);
-                newButton.setText(cat.getName());
-                result.add(newButton);
+                result.add(cat);
             }
             return result;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<CategoryButton> result) {
+        protected void onPostExecute(ArrayList<Category> result) {
             // remove the indeterminate ProgressBar
-            ll.removeView(pb);
+            pb.setVisibility(View.GONE);
             // add the category buttons to the LinearLayout in SelectCategoryActivity
-            for (int i = 0; i < result.size(); i++) {
-                ll.addView(result.get(i));
-            }
+            listView.setVisibility(View.VISIBLE);
+            adapter.addAll(result);
+            adapter.notifyDataSetChanged();
         }
     }
 
