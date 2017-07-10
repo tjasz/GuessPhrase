@@ -28,15 +28,16 @@ public class SelectCategoryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_select_category);
         // add a loading wheel to the display while categories load
         ll = (LinearLayout) findViewById(R.id.categoryButtonsLayout);
-        pb = new ProgressBar(this);
-        pb.setIndeterminate(true);
-        ll.addView(pb);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         // load the categories and create buttons for them
+        ll.removeAllViews();
+        pb = new ProgressBar(this);
+        pb.setIndeterminate(true);
+        ll.addView(pb);
         new LoadCategoriesTask().execute(this);
     }
 
