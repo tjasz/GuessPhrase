@@ -139,7 +139,13 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.okay),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
+                                if (hasNetworkConnection()) {
+                                    dialog.dismiss();
+                                    openAddCategoryActivity();
+                                }
+                                else {
+                                    dialog.dismiss();
+                                }
                             }
                         });
                 alertDialog.show();
