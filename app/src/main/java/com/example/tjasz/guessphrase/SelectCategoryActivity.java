@@ -1,7 +1,12 @@
 package com.example.tjasz.guessphrase;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -112,8 +117,26 @@ public class SelectCategoryActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_category) {
-            Intent intent = new Intent(SelectCategoryActivity.this, AddCategoryActivity.class);
-            startActivity(intent);
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnected();
+            if (isConnected) {
+                Intent intent = new Intent(SelectCategoryActivity.this, AddCategoryActivity.class);
+                startActivity(intent);
+            }
+            else {
+                AlertDialog alertDialog = new AlertDialog.Builder(SelectCategoryActivity.this).create();
+                alertDialog.setCancelable(true);
+                alertDialog.setTitle(getResources().getString(R.string.error_connection_required_title));
+                alertDialog.setMessage(getResources().getString(R.string.error_connection_required_message));
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.okay),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
             return true;
         }
 

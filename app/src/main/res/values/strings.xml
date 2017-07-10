@@ -26,8 +26,11 @@
     <string name="category_entertainment_label">Entertainment</string>
     <string name="category_dirty_label">Sex, Drugs, and Alcohol</string>
 
-    <string name="title_activity_add_category">Add Category</string>
     <string name="action_add_category">Add Category</string>
+    <string name="error_connection_required_title">Connection Required</string>
+    <string name="error_connection_required_message">Downloading custom categories requires a network connection.</string>
+
+    <string name="title_activity_add_category">Add Category</string>
     <string name="title_label">Title</string>
     <string name="wiki_bases_label">Wikipedia Pages</string>
     <string name="add_wiki_base">+</string>
