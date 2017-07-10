@@ -1,5 +1,7 @@
 package com.example.tjasz.guessphrase;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import java.io.FileOutputStream;
 
 
 public class AddCategoryActivity extends ActionBarActivity {
+    EditText titleEditText;
     RelativeLayout wikiBaseContainer;
     EditText lastWikiBase;
     Button addWikiBaseButton;
@@ -23,6 +26,7 @@ public class AddCategoryActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
+        titleEditText = (EditText) findViewById(R.id.category_title_edit_text);
         wikiBaseContainer = (RelativeLayout) findViewById(R.id.wiki_bases_container);
         lastWikiBase = (EditText) findViewById(R.id.first_wiki_base);
         addWikiBaseButton = (Button) findViewById(R.id.add_wiki_base_button);
@@ -53,7 +57,35 @@ public class AddCategoryActivity extends ActionBarActivity {
     }
 
     public void saveCategory(View v) {
-        new SaveCategoryTask().execute();
+        if (titleEditText.getText().length() <= 0) {
+            AlertDialog alertDialog = new AlertDialog.Builder(AddCategoryActivity.this).create();
+            alertDialog.setCancelable(true);
+            alertDialog.setTitle(getResources().getString(R.string.error_invalid_category));
+            alertDialog.setMessage(getResources().getString(R.string.error_no_category_name));
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.okay),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+        else if (lastWikiBase.getText().length() <= 0) {
+            AlertDialog alertDialog = new AlertDialog.Builder(AddCategoryActivity.this).create();
+            alertDialog.setCancelable(true);
+            alertDialog.setTitle(getResources().getString(R.string.error_invalid_category));
+            alertDialog.setMessage(getResources().getString(R.string.error_no_wiki_pages_selected));
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.okay),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+        else {
+            new SaveCategoryTask().execute();
+        }
     }
 
     private class SaveCategoryTask extends AsyncTask<Void, Void, Void> {
@@ -66,7 +98,6 @@ public class AddCategoryActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params) {
             // build a category object from the values of the edit texts
             Category cat = new Category();
-            EditText titleEditText = (EditText) findViewById(R.id.category_title_edit_text);
             cat.setName(titleEditText.getText().toString());
             for (int i = 0; i < wikiBaseContainer.getChildCount(); i++) {
                 View child = wikiBaseContainer.getChildAt(i);
