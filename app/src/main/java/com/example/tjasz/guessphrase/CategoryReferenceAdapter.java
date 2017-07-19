@@ -59,6 +59,10 @@ public class CategoryReferenceAdapter extends BaseAdapter {
         list.addAll(items);
     }
 
+    public void removeAtPosition(int position) {
+        list.remove(position);
+    }
+
     public void removeAll() {
         list.clear();
     }

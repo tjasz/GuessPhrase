@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +29,8 @@ import java.util.ArrayList;
 
 
 public class SelectCategoryActivity extends ActionBarActivity {
+    private static final int CONTEXT_DELETE = 0;
+
     LinearLayout ll;
     ProgressBar pb;
     CategoryReferenceAdapter adapter;
@@ -58,6 +62,7 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        registerForContextMenu(listView);
     }
 
     @Override
@@ -178,5 +183,37 @@ public class SelectCategoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == listView.getId()) {
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            Category cat = (Category) listView.getItemAtPosition(acmi.position);
+            menu.add(Menu.NONE, CONTEXT_DELETE, 0,
+                    getResources().getString(R.string.delete) + " \"" + cat.getName() + "\"");
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // get category corresponding to selected item
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Category cat = (Category) listView.getItemAtPosition(acmi.position);
+        // handle selected menu action
+        if (item.getItemId() == CONTEXT_DELETE) {
+            if (cat.getIsCustom()) {
+                File customCategoryDir = new File(getExternalFilesDir(null), "category");
+                File file = new File(customCategoryDir, cat.getPath());
+                file.delete();
+                adapter.removeAtPosition(acmi.position);
+                adapter.notifyDataSetChanged();
+            }
+            else {
+                Toast.makeText(this, R.string.delete_default_category, Toast.LENGTH_LONG).show();
+            }
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

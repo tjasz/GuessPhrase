@@ -42,4 +42,7 @@
     <string name="error_no_wiki_pages_selected">You must enter at least one Wikipedia page on which to base your category.</string>
     <string name="okay">OK</string>
 
+    <string name="delete">Delete</string>
+    <string name="delete_default_category">Cannot delete default category.</string>
+
 </resources>
