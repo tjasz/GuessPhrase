@@ -190,8 +190,10 @@ public class SelectCategoryActivity extends ActionBarActivity {
         if (v.getId() == listView.getId()) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
             Category cat = (Category) listView.getItemAtPosition(acmi.position);
-            menu.add(Menu.NONE, CONTEXT_DELETE, 0,
-                    getResources().getString(R.string.delete) + " \"" + cat.getName() + "\"");
+            if (cat.getIsCustom()) {
+                menu.add(Menu.NONE, CONTEXT_DELETE, 0,
+                        getResources().getString(R.string.delete) + " \"" + cat.getName() + "\"");
+            }
         }
     }
 
@@ -202,16 +204,11 @@ public class SelectCategoryActivity extends ActionBarActivity {
         Category cat = (Category) listView.getItemAtPosition(acmi.position);
         // handle selected menu action
         if (item.getItemId() == CONTEXT_DELETE) {
-            if (cat.getIsCustom()) {
-                File customCategoryDir = new File(getExternalFilesDir(null), "category");
-                File file = new File(customCategoryDir, cat.getPath());
-                file.delete();
-                adapter.removeAtPosition(acmi.position);
-                adapter.notifyDataSetChanged();
-            }
-            else {
-                Toast.makeText(this, R.string.delete_default_category, Toast.LENGTH_LONG).show();
-            }
+            File customCategoryDir = new File(getExternalFilesDir(null), "category");
+            File file = new File(customCategoryDir, cat.getPath());
+            file.delete();
+            adapter.removeAtPosition(acmi.position);
+            adapter.notifyDataSetChanged();
             return true;
         }
         return super.onContextItemSelected(item);
