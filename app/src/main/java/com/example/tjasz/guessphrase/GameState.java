@@ -114,26 +114,10 @@ public class GameState {
             throw new RuntimeException(e);
         }
         // load category from the asset file
-        try {
-            category = new Category();
-            if (isCustomCategory) {
-                try {
-                    File dir = new File(myContext.getExternalFilesDir(null), "category");
-                    File file = new File(dir, categoryPath);
-                    FileInputStream fis = new FileInputStream(file);
-                    category.readJSONFile(fis);
-                }
-                catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                category.readJSONFile(assetManager.open("category/" + categoryPath));
-            }
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        category = new Category(myContext);
+        category.setIsCustom(isCustomCategory);
+        category.setPath(categoryPath);
+        category.readJSONFile();
     }
 
     // load a new game with categoryBools as given
@@ -142,26 +126,10 @@ public class GameState {
         isCustomCategory = newIsCustom;
         categoryPath = newCategoryPath;
         // load category from the asset file
-        try {
-            category = new Category();
-            if (isCustomCategory) {
-                try {
-                    File dir = new File(myContext.getExternalFilesDir(null), "category");
-                    File file = new File(dir, categoryPath);
-                    FileInputStream fis = new FileInputStream(file);
-                    category.readJSONFile(fis);
-                }
-                catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                category.readJSONFile(assetManager.open("category/" + categoryPath));
-            }
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        category = new Category(myContext);
+        category.setIsCustom(isCustomCategory);
+        category.setPath(categoryPath);
+        category.readJSONFile();
     }
 
     // save the game state to the save file

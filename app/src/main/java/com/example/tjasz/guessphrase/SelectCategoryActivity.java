@@ -89,10 +89,10 @@ public class SelectCategoryActivity extends ActionBarActivity {
             try {
                 String[] assets = am.list("category");
                 for (int i = 0; i < assets.length; i++) {
-                    Category cat = new Category();
+                    Category cat = new Category(SelectCategoryActivity.this);
                     cat.setIsCustom(false);
                     cat.setPath(assets[i]);
-                    cat.readJSONFile(am.open("category/" + assets[i]));
+                    cat.readJSONFile();
                     result.add(cat);
                 }
             }
@@ -103,17 +103,10 @@ public class SelectCategoryActivity extends ActionBarActivity {
             File customCategoryDir = new File(getExternalFilesDir(null), "category");
             String[] customCategoryFiles = customCategoryDir.list();
             for (int i = 0; i < customCategoryFiles.length; i++) {
-                Category cat = new Category();
+                Category cat = new Category(SelectCategoryActivity.this);
                 cat.setIsCustom(true);
                 cat.setPath(customCategoryFiles[i]);
-                File file = new File(customCategoryDir, customCategoryFiles[i]);
-                try {
-                    FileInputStream fis = new FileInputStream(file);
-                    cat.readJSONFile(fis);
-                }
-                catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                cat.readJSONFile();
                 result.add(cat);
             }
             return result;
@@ -204,9 +197,7 @@ public class SelectCategoryActivity extends ActionBarActivity {
         Category cat = (Category) listView.getItemAtPosition(acmi.position);
         // handle selected menu action
         if (item.getItemId() == CONTEXT_DELETE) {
-            File customCategoryDir = new File(getExternalFilesDir(null), "category");
-            File file = new File(customCategoryDir, cat.getPath());
-            file.delete();
+            cat.deleteFile();
             adapter.removeAtPosition(acmi.position);
             adapter.notifyDataSetChanged();
             return true;

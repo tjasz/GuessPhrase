@@ -97,8 +97,11 @@ public class AddCategoryActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // build a category object from the values of the edit texts
-            Category cat = new Category();
+            Category cat = new Category(AddCategoryActivity.this);
             cat.setName(titleEditText.getText().toString());
+            cat.setIsCustom(true);
+            String filename = cat.getName().replaceAll("[^A-Za-z0-9]", "_") + ".json";
+            cat.setPath(filename);
             for (int i = 0; i < wikiBaseContainer.getChildCount(); i++) {
                 View child = wikiBaseContainer.getChildAt(i);
                 if (child.getId() != addWikiBaseButton.getId()) {
@@ -107,17 +110,7 @@ public class AddCategoryActivity extends ActionBarActivity {
                 }
             }
             // save the category to a file
-            String filename = cat.getName().replaceAll("[^A-Za-z0-9]", "_") + ".json";
-            try {
-                File dir = new File(getExternalFilesDir(null), "category");
-                dir.mkdirs();
-                File file = new File(dir, filename);
-                FileOutputStream fos = new FileOutputStream(file);
-                cat.writeJSONFile(fos);
-            }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            cat.writeJSONFile();
             return null;
         }
 

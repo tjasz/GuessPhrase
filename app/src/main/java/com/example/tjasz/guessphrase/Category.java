@@ -1,11 +1,18 @@
 package com.example.tjasz.guessphrase;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,14 +24,19 @@ import java.util.Collection;
 import java.util.Random;
 
 public class Category {
+    Context myContext;
+    File customCategoriesDir;
+
     private String name;
     boolean isCustom;
     String path;
     private ArrayList<String> items;
     Random generator;
 
-    Category() {
+    Category(Context context) {
         generator = new Random();
+        myContext = context;
+        customCategoriesDir = new File(myContext.getExternalFilesDir(null), "category");
     }
 
     public void setName(String newName) {
@@ -62,7 +74,26 @@ public class Category {
         return path;
     }
 
-    public void readJSONFile(InputStream fis) {
+    public void readJSONFile() {
+        // open file stream
+        InputStream fis;
+        if (isCustom) {
+            try {
+                fis = new FileInputStream(new File(customCategoriesDir, path));
+            }
+            catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        else {
+            AssetManager am = myContext.getAssets();
+            try {
+                fis = am.open("category/" + path);
+            }
+            catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
         // read category from save file
         String saveString = "";
         BufferedReader reader = null;
@@ -100,7 +131,7 @@ public class Category {
         }
     }
 
-    public void writeJSONFile(OutputStream fos) {
+    public void writeJSONFile() {
         // collect category attributes in JSON object
         JSONObject categoryJSON = new JSONObject();
         try {
@@ -112,17 +143,26 @@ public class Category {
             throw new RuntimeException(e);
         }
         // write game state to file
+        OutputStream fos;
         PrintWriter writer = null;
         try {
+            fos = new FileOutputStream(new File(customCategoriesDir, name));
             writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
                     fos)));
             writer.print(categoryJSON.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
+        }
+        catch (FileNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+        finally {
             if (null != writer) {
                 writer.close();
             }
         }
+    }
+
+    public void deleteFile() {
+        File file = new File(customCategoriesDir, getPath());
+        file.delete();
     }
 }
