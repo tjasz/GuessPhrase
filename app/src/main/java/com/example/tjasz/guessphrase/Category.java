@@ -162,7 +162,9 @@ public class Category {
     }
 
     public void deleteFile() {
-        File file = new File(customCategoriesDir, getPath());
-        file.delete();
+        if (isCustom) {
+            File file = new File(customCategoriesDir, getPath());
+            file.delete();
+        }
     }
 }
