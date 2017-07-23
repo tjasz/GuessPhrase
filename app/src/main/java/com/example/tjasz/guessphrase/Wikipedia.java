@@ -9,9 +9,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -25,7 +27,8 @@ public class Wikipedia {
         try {
             while (hasMore) {
                 // form query string
-                String qString = "&action=query&prop=links&pllimit=500&plnamespace=0&titles=" + pageName;
+                String qString = "&action=query&prop=links&pllimit=500&plnamespace=0";
+                qString += "&titles=" + URLEncoder.encode(pageName, "UTF-8");
                 if (nextPage != null && nextPage.length() > 0) {
                     qString += "&plcontinue=" + nextPage;
                 }
@@ -53,6 +56,9 @@ public class Wikipedia {
                 }
             }
         }
+        catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -65,7 +71,7 @@ public class Wikipedia {
             // form query string
             String qString = "&action=query&list=search";
             qString += "&srlimit=" + Integer.toString(numResults);
-            qString += "&srsearch=" + pageName;
+            qString += "&srsearch=" + URLEncoder.encode(pageName, "UTF-8");
             // get raw result from query
             JSONObject qResult = new JSONObject(query(qString));
             // get list of page titles from this search query
@@ -73,6 +79,9 @@ public class Wikipedia {
             for (int i = 0; i < pages.length(); i++) {
                 resultTitles.add(pages.getJSONObject(i).getString("title"));
             }
+        }
+        catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
         catch (JSONException e) {
             throw new RuntimeException(e);
