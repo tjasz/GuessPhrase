@@ -74,6 +74,7 @@ public class AddCategoryActivity extends ActionBarActivity {
     }
 
     public void saveCategory(View v) {
+        DelayAutoCompleteTextView firstWikiBase = (DelayAutoCompleteTextView) findViewById(R.id.first_wiki_base);
         if (titleEditText.getText().length() <= 0) {
             AlertDialog alertDialog = new AlertDialog.Builder(AddCategoryActivity.this).create();
             alertDialog.setCancelable(true);
@@ -87,7 +88,7 @@ public class AddCategoryActivity extends ActionBarActivity {
                     });
             alertDialog.show();
         }
-        else if (lastWikiBase.getText().length() <= 0) {
+        else if (firstWikiBase.getText().length() <= 0) {
             AlertDialog alertDialog = new AlertDialog.Builder(AddCategoryActivity.this).create();
             alertDialog.setCancelable(true);
             alertDialog.setTitle(getResources().getString(R.string.error_invalid_category));
