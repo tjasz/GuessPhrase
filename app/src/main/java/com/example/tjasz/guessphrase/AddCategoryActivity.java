@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -17,9 +18,11 @@ import java.io.FileOutputStream;
 
 
 public class AddCategoryActivity extends ActionBarActivity {
+    private static final int MINIMUM_SEARCH_TERM_LENGTH = 3;
+
     EditText titleEditText;
     RelativeLayout wikiBaseContainer;
-    EditText lastWikiBase;
+    DelayAutoCompleteTextView lastWikiBase;
     Button addWikiBaseButton;
 
     @Override
@@ -28,13 +31,26 @@ public class AddCategoryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add_category);
         titleEditText = (EditText) findViewById(R.id.category_title_edit_text);
         wikiBaseContainer = (RelativeLayout) findViewById(R.id.wiki_bases_container);
-        lastWikiBase = (EditText) findViewById(R.id.first_wiki_base);
+        lastWikiBase = (DelayAutoCompleteTextView) findViewById(R.id.first_wiki_base);
+        setupWikiBase(lastWikiBase);
         addWikiBaseButton = (Button) findViewById(R.id.add_wiki_base_button);
+    }
+
+    private void setupWikiBase(final DelayAutoCompleteTextView wikiBase) {
+        wikiBase.setThreshold(MINIMUM_SEARCH_TERM_LENGTH);
+        wikiBase.setAdapter(new WikiPageAutoCompleteAdapter(this));
+        wikiBase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String title = (String) adapterView.getItemAtPosition(position);
+                wikiBase.setText(title);
+            }
+        });
     }
 
     public void addNewWikiBaseEditText(View v) {
         if (v.getId() == R.id.add_wiki_base_button) {
-            EditText newEditText = new EditText(this);
+            DelayAutoCompleteTextView newEditText = new DelayAutoCompleteTextView(this);
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -45,6 +61,7 @@ public class AddCategoryActivity extends ActionBarActivity {
             newEditText.setFocusableInTouchMode(true);
             newEditText.requestFocus();
             lastWikiBase = newEditText;
+            setupWikiBase(lastWikiBase);
 
             RelativeLayout.LayoutParams button_lp = (RelativeLayout.LayoutParams) addWikiBaseButton.getLayoutParams();
             button_lp.addRule(RelativeLayout.BELOW, newEditText.getId());

@@ -59,6 +59,27 @@ public class Wikipedia {
         return linksList;
     }
 
+    public static HashSet<String> search(String pageName, int numResults) {
+        HashSet<String> resultTitles = new HashSet<>();
+        try {
+            // form query string
+            String qString = "&action=query&list=search";
+            qString += "&srlimit=" + Integer.toString(numResults);
+            qString += "&srsearch=" + pageName;
+            // get raw result from query
+            JSONObject qResult = new JSONObject(query(qString));
+            // get list of page titles from this search query
+            JSONArray pages = qResult.getJSONObject("query").getJSONArray("search");
+            for (int i = 0; i < pages.length(); i++) {
+                resultTitles.add(pages.getJSONObject(i).getString("title"));
+            }
+        }
+        catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return resultTitles;
+    }
+
     public static String query(String URI) {
         String data = "";
         HttpURLConnection huc = null;

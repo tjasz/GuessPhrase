@@ -76,7 +76,7 @@
             android:id="@+id/wiki_bases_container"
             >
 
-            <EditText
+            <com.example.tjasz.guessphrase.DelayAutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/first_wiki_base"
