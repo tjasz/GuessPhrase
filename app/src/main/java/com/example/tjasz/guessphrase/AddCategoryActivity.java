@@ -88,7 +88,7 @@ public class AddCategoryActivity extends ActionBarActivity {
                     });
             alertDialog.show();
         }
-        else if (firstWikiBase.getText().length() <= 0) {
+        else if (firstWikiBase.getText().toString().trim().length() <= 0) {
             AlertDialog alertDialog = new AlertDialog.Builder(AddCategoryActivity.this).create();
             alertDialog.setCancelable(true);
             alertDialog.setTitle(getResources().getString(R.string.error_invalid_category));
