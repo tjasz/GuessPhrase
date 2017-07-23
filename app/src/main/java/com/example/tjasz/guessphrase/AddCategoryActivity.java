@@ -124,7 +124,10 @@ public class AddCategoryActivity extends ActionBarActivity {
                 View child = wikiBaseContainer.getChildAt(i);
                 if (child.getId() != addWikiBaseButton.getId()) {
                     EditText et = (EditText) child;
-                    cat.addItems(Wikipedia.getLinks(et.getText().toString()));
+                    String title = et.getText().toString().trim();
+                    if (title.length() > 0) {
+                        cat.addItems(Wikipedia.getLinks(title));
+                    }
                 }
             }
             // save the category to a file
