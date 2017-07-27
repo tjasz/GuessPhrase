@@ -10,20 +10,11 @@
     tools:context="com.example.tjasz.guessphrase.AddCategoryActivity"
     >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/title_label"
-        android:layout_alignParentTop="true"
-        android:textSize="16pt"
-        android:text="@string/title_label"
-        />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/category_title_edit_text"
-        android:layout_below="@id/title_label"
+        android:layout_alignParentTop="true"
         android:hint="@string/title_label"
         />
 
