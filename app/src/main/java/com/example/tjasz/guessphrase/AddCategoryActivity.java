@@ -62,10 +62,6 @@ public class AddCategoryActivity extends ActionBarActivity {
             newEditText.requestFocus();
             lastWikiBase = newEditText;
             setupWikiBase(lastWikiBase);
-
-            RelativeLayout.LayoutParams button_lp = (RelativeLayout.LayoutParams) addWikiBaseButton.getLayoutParams();
-            button_lp.addRule(RelativeLayout.BELOW, newEditText.getId());
-            addWikiBaseButton.setLayoutParams(button_lp);
         }
     }
 
