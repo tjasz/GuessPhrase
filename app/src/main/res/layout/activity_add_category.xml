@@ -27,14 +27,24 @@
         android:text="@string/wiki_bases_label"
         />
 
-    <Button
+    <com.example.tjasz.guessphrase.DelayAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/wiki_base_searcher"
+        android:layout_below="@id/wiki_bases_label"
+        android:hint="@string/wiki_base_searcher_hint"
+        />
+
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/add_wiki_base_button"
-        android:layout_below="@id/category_title_edit_text"
+        android:id="@+id/wiki_base_loading_wheel"
+        android:layout_below="@id/wiki_bases_label"
         android:layout_alignParentRight="true"
-        android:onClick="addNewWikiBaseEditText"
-        android:text="@string/add_wiki_base"
+        android:layout_gravity="center_vertical|right"
+        style="?android:attr/progressBarStyleSmall"
+        android:indeterminate="true"
+        android:visibility="gone"
         />
 
     <LinearLayout
@@ -63,28 +73,12 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/wiki_bases_scrollview"
-        android:layout_below="@id/wiki_bases_label"
+        android:id="@+id/wiki_bases_list_view"
+        android:layout_below="@id/wiki_base_searcher"
         android:layout_above="@id/button_container"
-        >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/wiki_bases_container"
-            >
-
-            <com.example.tjasz.guessphrase.DelayAutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/first_wiki_base"
-                />
-
-        </RelativeLayout>
-
-    </ScrollView>
+        />
 
 </RelativeLayout>

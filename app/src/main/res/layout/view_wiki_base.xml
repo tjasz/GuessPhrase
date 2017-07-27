@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/remove_wiki_base_button"
+        android:layout_alignParentRight="true"
+        android:text="@string/remove_wiki_base"
+        android:textColor="#ff0000"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/wiki_base_text_view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@id/remove_wiki_base_button"
+        />
+
+</RelativeLayout>

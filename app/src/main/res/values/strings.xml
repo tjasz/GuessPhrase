@@ -33,7 +33,8 @@
     <string name="title_activity_add_category">Add Category</string>
     <string name="title_label">Title</string>
     <string name="wiki_bases_label">Wikipedia Pages</string>
-    <string name="add_wiki_base">+</string>
+    <string name="remove_wiki_base">-</string>
+    <string name="wiki_base_searcher_hint">Search Wikipedia</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="category_saved">Category Saved.</string>

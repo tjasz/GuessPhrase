@@ -7,62 +7,41 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 
 public class AddCategoryActivity extends ActionBarActivity {
     private static final int MINIMUM_SEARCH_TERM_LENGTH = 3;
 
     EditText titleEditText;
-    RelativeLayout wikiBaseContainer;
-    DelayAutoCompleteTextView lastWikiBase;
-    Button addWikiBaseButton;
+    ListView wikiBaseListView;
+    WikiBaseAdapter adapter;
+    DelayAutoCompleteTextView wikiBaseSearcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
         titleEditText = (EditText) findViewById(R.id.category_title_edit_text);
-        wikiBaseContainer = (RelativeLayout) findViewById(R.id.wiki_bases_container);
-        lastWikiBase = (DelayAutoCompleteTextView) findViewById(R.id.first_wiki_base);
-        setupWikiBase(lastWikiBase);
-        addWikiBaseButton = (Button) findViewById(R.id.add_wiki_base_button);
-    }
-
-    private void setupWikiBase(final DelayAutoCompleteTextView wikiBase) {
-        wikiBase.setThreshold(MINIMUM_SEARCH_TERM_LENGTH);
-        wikiBase.setAdapter(new WikiPageAutoCompleteAdapter(this));
-        wikiBase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter = new WikiBaseAdapter(this);
+        wikiBaseListView = (ListView) findViewById(R.id.wiki_bases_list_view);
+        wikiBaseListView.setAdapter(adapter);
+        wikiBaseSearcher = (DelayAutoCompleteTextView) findViewById(R.id.wiki_base_searcher);
+        wikiBaseSearcher.setThreshold(MINIMUM_SEARCH_TERM_LENGTH);
+        wikiBaseSearcher.setAdapter(new WikiPageAutoCompleteAdapter(this));
+        wikiBaseSearcher.setLoadingIndicator(
+                (ProgressBar) findViewById(R.id.wiki_base_loading_wheel));
+        wikiBaseSearcher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String title = (String) adapterView.getItemAtPosition(position);
-                wikiBase.setText(title);
+                String suggestion = (String) adapterView.getItemAtPosition(position);
+                adapter.add(suggestion);
+                wikiBaseSearcher.setText("");
             }
         });
-    }
-
-    public void addNewWikiBaseEditText(View v) {
-        if (v.getId() == R.id.add_wiki_base_button) {
-            DelayAutoCompleteTextView newEditText = new DelayAutoCompleteTextView(this);
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lp.addRule(RelativeLayout.BELOW, lastWikiBase.getId());
-            newEditText.setLayoutParams(lp);
-            newEditText.setId(View.generateViewId());
-            wikiBaseContainer.addView(newEditText);
-            newEditText.setFocusableInTouchMode(true);
-            newEditText.requestFocus();
-            lastWikiBase = newEditText;
-            setupWikiBase(lastWikiBase);
-        }
     }
 
     public void cancel(View v) {
@@ -70,7 +49,6 @@ public class AddCategoryActivity extends ActionBarActivity {
     }
 
     public void saveCategory(View v) {
-        DelayAutoCompleteTextView firstWikiBase = (DelayAutoCompleteTextView) findViewById(R.id.first_wiki_base);
         if (titleEditText.getText().length() <= 0) {
             AlertDialog alertDialog = new AlertDialog.Builder(AddCategoryActivity.this).create();
             alertDialog.setCancelable(true);
@@ -84,7 +62,7 @@ public class AddCategoryActivity extends ActionBarActivity {
                     });
             alertDialog.show();
         }
-        else if (firstWikiBase.getText().toString().trim().length() <= 0) {
+        else if (adapter.getCount() <= 0) {
             AlertDialog alertDialog = new AlertDialog.Builder(AddCategoryActivity.this).create();
             alertDialog.setCancelable(true);
             alertDialog.setTitle(getResources().getString(R.string.error_invalid_category));
@@ -116,14 +94,10 @@ public class AddCategoryActivity extends ActionBarActivity {
             cat.setIsCustom(true);
             String filename = cat.getName().replaceAll("[^A-Za-z0-9]", "_") + ".json";
             cat.setPath(filename);
-            for (int i = 0; i < wikiBaseContainer.getChildCount(); i++) {
-                View child = wikiBaseContainer.getChildAt(i);
-                if (child.getId() != addWikiBaseButton.getId()) {
-                    EditText et = (EditText) child;
-                    String title = et.getText().toString().trim();
-                    if (title.length() > 0) {
-                        cat.addItems(Wikipedia.getLinks(title));
-                    }
+            for (int i = 0; i < adapter.getCount(); i++) {
+                String title = adapter.getItem(i);
+                if (title.length() > 0) {
+                    cat.addItems(Wikipedia.getLinks(title));
                 }
             }
             // save the category to a file
