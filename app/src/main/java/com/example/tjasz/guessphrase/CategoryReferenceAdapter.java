@@ -41,7 +41,7 @@ public class CategoryReferenceAdapter extends BaseAdapter {
         View newView = convertView;
 
         if (convertView == null) {
-            newView = inflater.inflate(R.layout.category_reference_view, parent, false);
+            newView = inflater.inflate(R.layout.view_category_reference, parent, false);
         }
 
         Category curr = list.get(position);
