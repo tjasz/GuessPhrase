@@ -75,7 +75,6 @@ public class SelectCategoryActivity extends ActionBarActivity {
     private class LoadCategoriesTask extends AsyncTask<SelectCategoryActivity, Void, ArrayList<Category>> {
         @Override
         protected void onPreExecute() {
-            adapter.removeAll();
             // add a loading wheel to the display while categories load
             listView.setVisibility(View.INVISIBLE);
             pb.setVisibility(View.VISIBLE);
@@ -118,6 +117,7 @@ public class SelectCategoryActivity extends ActionBarActivity {
             pb.setVisibility(View.GONE);
             // add the category buttons to the LinearLayout in SelectCategoryActivity
             listView.setVisibility(View.VISIBLE);
+            adapter.removeAll();
             adapter.addAll(result);
             adapter.notifyDataSetChanged();
         }
