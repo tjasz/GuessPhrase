@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar
+import android.widget.ProgressBar;
 
 
 public class AddCategoryActivity extends ActionBarActivity {
@@ -81,6 +81,7 @@ public class AddCategoryActivity extends ActionBarActivity {
             alertDialog.show();
         }
         else {
+            finish();
             new SaveCategoryTask().execute();
         }
     }
@@ -134,7 +135,6 @@ public class AddCategoryActivity extends ActionBarActivity {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(MY_NOTIFICATION_ID, notificationBuilder.build());
-            finish();
         }
     }
 }
