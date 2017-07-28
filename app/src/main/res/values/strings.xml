@@ -38,6 +38,7 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="category_saved">Category Saved.</string>
+    <string name="category_saved_detail">has been downloaded.</string>
     <string name="error_invalid_category">Invalid Category</string>
     <string name="error_no_category_name">You must provide a title for the category.</string>
     <string name="error_no_wiki_pages_selected">You must enter at least one Wikipedia page on which to base your category.</string>

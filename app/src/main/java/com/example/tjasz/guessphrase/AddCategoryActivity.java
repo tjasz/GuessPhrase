@@ -1,7 +1,12 @@
 package com.example.tjasz.guessphrase;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,12 +14,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.ProgressBar
 
 
 public class AddCategoryActivity extends ActionBarActivity {
     private static final int MINIMUM_SEARCH_TERM_LENGTH = 3;
+    private static final int MY_NOTIFICATION_ID = 2017072719;
 
     EditText titleEditText;
     ListView wikiBaseListView;
@@ -80,14 +85,14 @@ public class AddCategoryActivity extends ActionBarActivity {
         }
     }
 
-    private class SaveCategoryTask extends AsyncTask<Void, Void, Void> {
+    private class SaveCategoryTask extends AsyncTask<Void, Void, Category> {
         @Override
         protected void onPreExecute() {
 
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Category doInBackground(Void... params) {
             // build a category object from the values of the edit texts
             Category cat = new Category(AddCategoryActivity.this);
             cat.setName(titleEditText.getText().toString());
@@ -102,15 +107,33 @@ public class AddCategoryActivity extends ActionBarActivity {
             }
             // save the category to a file
             cat.writeJSONFile();
-            return null;
+            return cat;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            Toast.makeText(
-                    AddCategoryActivity.this,
-                    getResources().getString(R.string.category_saved),
-                    Toast.LENGTH_LONG).show();
+        protected void onPostExecute(Category result) {
+            // create an intent to restart the SelectCategoryActivity
+            final Intent restartSelectCategoryActivityIntent =
+                    new Intent(AddCategoryActivity.this, SelectCategoryActivity.class);
+            // create a pending intent to encapsulate the restartSelectCategoryActivity intent
+            PendingIntent pi = PendingIntent.getActivity(
+                AddCategoryActivity.this,
+                MY_NOTIFICATION_ID,
+                restartSelectCategoryActivityIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            );
+            // build a notification to say the download has been completed
+            Notification.Builder notificationBuilder = new Notification.Builder(AddCategoryActivity.this)
+                    .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                    .setAutoCancel(true)
+                    .setContentTitle(getResources().getString(R.string.category_saved))
+                    .setContentText("\"" + result.getName() + "\" " +
+                            getResources().getString(R.string.category_saved_detail))
+                    .setContentIntent(pi);
+            // send the notification
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(MY_NOTIFICATION_ID, notificationBuilder.build());
             finish();
         }
     }
