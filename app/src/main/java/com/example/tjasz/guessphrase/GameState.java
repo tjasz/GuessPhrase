@@ -75,6 +75,10 @@ public class GameState {
         return category.getRandomItem();
     }
 
+    public String getCategoryName() {
+        return category.getName();
+    }
+
     // restore a game from the save file
     public void restoreGame() {
         // read game state from save file

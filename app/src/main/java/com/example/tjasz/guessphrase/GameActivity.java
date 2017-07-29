@@ -23,7 +23,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
 
     boolean visible;
     RelativeLayout loadingWheel;
-    TextView mainText, t1scoreText, t2scoreText, timerText;
+    TextView categoryNameText, mainText, t1scoreText, t2scoreText, timerText;
     private static final int T1COLOR = Color.rgb(0,128,0);
     private static final int T2COLOR = Color.rgb(0,0,128);
     GameState gameState;
@@ -36,6 +36,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         setContentView(R.layout.activity_game);
 
         loadingWheel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        categoryNameText = (TextView) findViewById(R.id.category_name);
         mainText = (TextView) findViewById(R.id.text_main);
         t1scoreText = (TextView) findViewById(R.id.t1score);
         t2scoreText = (TextView) findViewById(R.id.t2score);
@@ -127,6 +128,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         }
         // update display
         updateDisplay();
+        categoryNameText.setText(gameState.getCategoryName());
         timerText.setTextColor(Color.BLACK);
         mainText.setTextColor(Color.BLACK);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
