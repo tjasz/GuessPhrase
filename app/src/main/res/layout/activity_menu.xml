@@ -26,4 +26,11 @@
         android:onClick="resumeGame"
         />
 
+    <Button
+        android:text="@string/how_to_play_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="showInstructions"
+        />
+
 </LinearLayout>

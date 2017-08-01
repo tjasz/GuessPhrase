@@ -37,6 +37,16 @@
         Use the form to search for Wikipedia pages on which to base your category.
         Ex: "List of Presidents of the United States".
     </string>
+    <string name="how_to_play_button">How to Play</string>
+    <string name="how_to_play">
+        GuessPhrase is played like the Hasbro team-based phrase-guessing game, Catch Phrase.
+        One player begins trying to get their team to say the phrase shown on screen,
+        but cannot say what it rhymes with, how many syllables/words it has,
+        the first letter of any word, or any part of the phrase.
+        Once the team guesses correctly, the other team takes a turn.
+        When the timer runs out, the team not holding the device scores a point.
+        The first team to 7 points wins.
+    </string>
 
     <string name="title_activity_add_category">Add Category</string>
     <string name="title_label">Title</string>

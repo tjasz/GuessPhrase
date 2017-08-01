@@ -1,7 +1,9 @@
 package com.example.tjasz.guessphrase;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
@@ -51,6 +53,21 @@ public class MenuActivity extends ActionBarActivity {
         Intent intent = new Intent(MenuActivity.this, GameActivity.class);
         intent.putExtra("resumingGame", true);
         startActivity(intent);
+    }
+
+    public void showInstructions(View v) {
+        AlertDialog alertDialog = new AlertDialog.Builder(MenuActivity.this).create();
+        alertDialog.setCancelable(true);
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.setTitle(getResources().getString(R.string.how_to_play_button));
+        alertDialog.setMessage(getResources().getString(R.string.how_to_play));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.okay),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     @Override
