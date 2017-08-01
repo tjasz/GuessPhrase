@@ -1,6 +1,7 @@
 package com.example.tjasz.guessphrase;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,12 @@ public class CategoryReferenceAdapter extends BaseAdapter {
         Category curr = list.get(position);
         TextView categoryTitleTextView = (TextView) newView.findViewById(R.id.category_title);
         categoryTitleTextView.setText(curr.getName());
+        if (curr.getIsCustom()) {
+            categoryTitleTextView.setTextColor(Color.rgb(0x60,0x60,0xb0));
+        }
+        else {
+            categoryTitleTextView.setTextColor(Color.rgb(0x60,0x60,0x60));
+        }
 
         return newView;
     }
