@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +46,9 @@ public class SelectCategoryActivity extends ActionBarActivity {
         pb = (ProgressBar) findViewById(R.id.loading_wheel);
         adapter = new CategoryReferenceAdapter(this);
         listView = (ListView) findViewById(R.id.category_list_view);
+        View footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.view_footer_add_category, null, false);
+        listView.addFooterView(footerView);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,6 +136,11 @@ public class SelectCategoryActivity extends ActionBarActivity {
     private void openAddCategoryActivity() {
         Intent intent = new Intent(SelectCategoryActivity.this, AddCategoryActivity.class);
         startActivity(intent);
+    }
+
+    // this one wraps the other for use as an onClick method
+    public void openAddCategoryActivity(View v) {
+        openAddCategoryActivity();
     }
 
     @Override
