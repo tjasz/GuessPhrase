@@ -30,6 +30,14 @@
     <string name="error_connection_required_title">Connection Required</string>
     <string name="error_connection_required_message">Downloading custom categories requires a network connection.</string>
 
+    <string name="action_add_category_help">Help</string>
+    <string name="add_category_help_message">
+        GuessPhrase allows you to leverage the collective knowledge of the internet in order to create custom categories.
+        This is accomplished using the idea that the page links on a Wikipedia page form a set of loosely related phrases.
+        Use the form to search for Wikipedia pages on which to base your category.
+        Ex: "List of Presidents of the United States".
+    </string>
+
     <string name="title_activity_add_category">Add Category</string>
     <string name="title_label">Title</string>
     <string name="wiki_bases_label">Wikipedia Pages</string>
