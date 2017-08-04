@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,7 +65,6 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        registerForContextMenu(listView);
     }
 
     @Override
@@ -188,32 +186,5 @@ public class SelectCategoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if (v.getId() == listView.getId()) {
-            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            Category cat = (Category) listView.getItemAtPosition(acmi.position);
-            if (cat.getIsCustom()) {
-                menu.add(Menu.NONE, CONTEXT_DELETE, 0,
-                        getResources().getString(R.string.delete) + " \"" + cat.getName() + "\"");
-            }
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        // get category corresponding to selected item
-        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Category cat = (Category) listView.getItemAtPosition(acmi.position);
-        // handle selected menu action
-        if (item.getItemId() == CONTEXT_DELETE) {
-            cat.deleteFile();
-            adapter.removeAtPosition(acmi.position);
-            adapter.notifyDataSetChanged();
-            return true;
-        }
-        return super.onContextItemSelected(item);
     }
 }
