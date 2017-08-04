@@ -104,6 +104,9 @@ public class SelectCategoryActivity extends ActionBarActivity {
             }
             // also create a button for each category in the custom categories folder
             File customCategoryDir = new File(getExternalFilesDir(null), "category");
+            if (!customCategoryDir.exists()) {
+                customCategoryDir.mkdir();
+            }
             String[] customCategoryFiles = customCategoryDir.list();
             for (int i = 0; i < customCategoryFiles.length; i++) {
                 Category cat = new Category(SelectCategoryActivity.this);
