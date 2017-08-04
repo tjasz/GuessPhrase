@@ -47,6 +47,9 @@
         When the timer runs out, the team not holding the device scores a point.
         The first team to 7 points wins.
     </string>
+    <string name = "confirm_delete_dialog_title">Confirm Deletion</string>
+    <string name = "confirm_delete_dialog_head">Are you sure you wish to delete the category \"</string>
+    <string name = "confirm_delete_dialog_tail">\"?</string>
 
     <string name="title_activity_add_category">Add Category</string>
     <string name="title_label">Title</string>

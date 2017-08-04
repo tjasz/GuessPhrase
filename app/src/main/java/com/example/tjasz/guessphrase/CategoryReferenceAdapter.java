@@ -1,6 +1,8 @@
 package com.example.tjasz.guessphrase;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,10 +60,33 @@ public class CategoryReferenceAdapter extends BaseAdapter {
             deleteIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Category cat = list.get(thisPos);
-                    cat.deleteFile();
-                    list.remove(thisPos);
-                    notifyDataSetChanged();
+                    final Category cat = list.get(thisPos);
+                    // confirm deletion with a dialog
+                    AlertDialog alertDialog = new AlertDialog.Builder(myContext).create();
+                    alertDialog.setCancelable(true);
+                    alertDialog.setCanceledOnTouchOutside(true);
+                    alertDialog.setTitle(R.string.confirm_delete_dialog_title);
+                    alertDialog.setMessage(
+                            myContext.getResources().getString(R.string.confirm_delete_dialog_head) +
+                            cat.getName() +
+                            myContext.getResources().getString(R.string.confirm_delete_dialog_tail));
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, myContext.getResources().getString(R.string.cancel),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, myContext.getResources().getString(R.string.okay),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // delete file
+                                    cat.deleteFile();
+                                    list.remove(thisPos);
+                                    notifyDataSetChanged();
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                 }
             });
         }
