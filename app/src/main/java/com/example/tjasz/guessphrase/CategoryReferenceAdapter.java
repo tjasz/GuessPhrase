@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class CategoryReferenceAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View newView = convertView;
+        final int thisPos = position;
 
         if (convertView == null) {
             newView = inflater.inflate(R.layout.view_category_reference, parent, false);
@@ -47,12 +49,25 @@ public class CategoryReferenceAdapter extends BaseAdapter {
 
         Category curr = list.get(position);
         TextView categoryTitleTextView = (TextView) newView.findViewById(R.id.category_title);
+        ImageView deleteIcon = (ImageView) newView.findViewById(R.id.delete_category_icon);
         categoryTitleTextView.setText(curr.getName());
         if (curr.getIsCustom()) {
             categoryTitleTextView.setTextColor(Color.rgb(0x60,0x60,0xb0));
+            // set onClick of the remove button
+            deleteIcon.setVisibility(View.VISIBLE);
+            deleteIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Category cat = list.get(thisPos);
+                    cat.deleteFile();
+                    list.remove(thisPos);
+                    notifyDataSetChanged();
+                }
+            });
         }
         else {
             categoryTitleTextView.setTextColor(Color.rgb(0x60,0x60,0x60));
+            deleteIcon.setVisibility(View.GONE);
         }
 
         return newView;
