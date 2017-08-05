@@ -74,7 +74,7 @@ public class Category {
         return path;
     }
 
-    public void readJSONFile() {
+    public void readJSONFile() throws CategoryNotFoundException {
         // open file stream
         InputStream fis;
         if (isCustom) {
@@ -82,7 +82,10 @@ public class Category {
                 fis = new FileInputStream(new File(customCategoriesDir, path));
             }
             catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
+                String message = myContext.getResources().getString(R.string.category_not_found_head);
+                message += path;
+                message += myContext.getResources().getString(R.string.category_not_found_tail);
+                throw new CategoryNotFoundException(message);
             }
         }
         else {

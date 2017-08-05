@@ -17,6 +17,7 @@ import android.os.Vibrator;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class GameActivity extends ActionBarActivity implements GameHandler {
@@ -58,6 +59,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
     private class LoadAndStartGameTask extends AsyncTask<Intent, Void, GameState> {
         Context myContext;
         GameHandler myGameHandler;
+        ArrayList<Exception> exceptionList = new ArrayList<>();
 
         LoadAndStartGameTask(Context context, GameHandler gameHandler) {
             myContext = context;
@@ -73,7 +75,12 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         protected GameState doInBackground(Intent... intents) {
             GameState result = new GameState(myContext, myGameHandler);
             if (intents[0].getBooleanExtra("resumingGame", false)) {
-                result.restoreGame();
+                try {
+                    result.restoreGame();
+                }
+                catch (CategoryNotFoundException ex) {
+                    exceptionList.add(ex);
+                }
             }
             else {
                 String assetFilename = intents[0].getStringExtra("path");
@@ -85,11 +92,38 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
 
         @Override
         protected void onPostExecute(GameState result) {
-            // re-enable game control buttons now that items have loaded
-            gameState = result;
-            if (visible) {
-                gameState.resumeTimer();
-                loadingWheel.setVisibility(View.GONE);
+            // check for errors
+            if (exceptionList.size() > 0) {
+                // show exception message in a dialog
+                AlertDialog alertDialog = new AlertDialog.Builder(myContext).create();
+                alertDialog.setCancelable(false);
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setTitle(R.string.game_load_error);
+                String message = "";
+                for (int i = 0; i < exceptionList.size(); i++) {
+                    message += exceptionList.get(i).getMessage();
+                    if (i < exceptionList.size() - 1) {
+                        message += "\n\n";
+                    }
+                }
+                alertDialog.setMessage(message);
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, myContext.getResources().getString(R.string.okay),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                // finish the activity; we couldn't load the game
+                                finish();
+                            }
+                        });
+                alertDialog.show();
+            }
+            else {
+                // re-enable game control buttons now that items have loaded
+                gameState = result;
+                if (visible) {
+                    gameState.resumeTimer();
+                    loadingWheel.setVisibility(View.GONE);
+                }
             }
         }
     }

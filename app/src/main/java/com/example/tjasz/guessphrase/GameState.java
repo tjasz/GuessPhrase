@@ -80,7 +80,7 @@ public class GameState {
     }
 
     // restore a game from the save file
-    public void restoreGame() {
+    public void restoreGame() throws CategoryNotFoundException {
         // read game state from save file
         String saveString = "";
         BufferedReader reader = null;
@@ -133,7 +133,13 @@ public class GameState {
         category = new Category(myContext);
         category.setIsCustom(isCustomCategory);
         category.setPath(categoryPath);
-        category.readJSONFile();
+        try {
+            category.readJSONFile();
+        }
+        catch (CategoryNotFoundException ex) {
+            // this shouldn't happen with new games
+            throw new RuntimeException(ex);
+        }
     }
 
     // save the game state to the save file

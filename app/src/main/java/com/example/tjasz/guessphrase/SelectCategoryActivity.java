@@ -110,7 +110,13 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 Category cat = new Category(SelectCategoryActivity.this);
                 cat.setIsCustom(true);
                 cat.setPath(customCategoryFiles[i]);
-                cat.readJSONFile();
+                try {
+                    cat.readJSONFile();
+                }
+                catch (CategoryNotFoundException ex) {
+                    // this really shouldn't happen here
+                    throw new RuntimeException(ex);
+                }
                 result.add(cat);
             }
             return result;
