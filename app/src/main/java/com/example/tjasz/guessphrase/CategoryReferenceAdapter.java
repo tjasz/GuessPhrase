@@ -66,23 +66,45 @@ public class CategoryReferenceAdapter extends BaseAdapter {
                     alertDialog.setCancelable(true);
                     alertDialog.setCanceledOnTouchOutside(true);
                     alertDialog.setTitle(R.string.confirm_delete_dialog_title);
-                    alertDialog.setMessage(
-                            myContext.getResources().getString(R.string.confirm_delete_dialog_head) +
+                    String message = myContext.getResources().getString(R.string.confirm_delete_dialog_head) +
                             cat.getName() +
-                            myContext.getResources().getString(R.string.confirm_delete_dialog_tail));
+                            myContext.getResources().getString(R.string.confirm_delete_dialog_tail);
+                    // if game save file exists and uses this category
+                    // append a warning to the confirmation message
+                    // and delete game save file if deletion of category is confirmed
+                    if (cat.isInSavedGame()) {
+                        message += "\n\n" + myContext.getResources().getString(R.string.warning_category_in_saved_game);
+                        // this positive button will delete the category file and the game save file
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, myContext.getResources().getString(R.string.okay),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // delete file
+                                        myContext.getFileStreamPath(myContext.getResources()
+                                                .getString(R.string.game_save_file_name)).delete();
+                                        cat.deleteFile();
+                                        list.remove(thisPos);
+                                        notifyDataSetChanged();
+                                        dialog.dismiss();
+                                    }
+                                });
+                    }
+                    // otherwise, only delete category if confirmed
+                    else {
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, myContext.getResources().getString(R.string.okay),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // delete file
+                                        cat.deleteFile();
+                                        list.remove(thisPos);
+                                        notifyDataSetChanged();
+                                        dialog.dismiss();
+                                    }
+                                });
+                    }
+                    alertDialog.setMessage(message);
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, myContext.getResources().getString(R.string.cancel),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, myContext.getResources().getString(R.string.okay),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // delete file
-                                    cat.deleteFile();
-                                    list.remove(thisPos);
-                                    notifyDataSetChanged();
                                     dialog.dismiss();
                                 }
                             });

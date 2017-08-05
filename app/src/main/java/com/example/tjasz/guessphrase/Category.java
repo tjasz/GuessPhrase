@@ -74,6 +74,25 @@ public class Category {
         return path;
     }
 
+    public boolean isInSavedGame() {
+        // return true if game save file exists and uses this category
+        if (myContext.getFileStreamPath(myContext.getResources().getString(R.string.game_save_file_name)).exists()) {
+            GameState gs = new GameState(myContext, null);
+            try {
+                gs.restoreGame();
+            }
+            catch (CategoryNotFoundException ex ) {
+                // this is not a problem here
+                // deal with this if resume game is attempted
+            }
+            if (isCustom == gs.getIsCustomCategory() && path.equals(gs.getCategoryPath())) {
+                // category matches that in the save file
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void readJSONFile() throws CategoryNotFoundException {
         // open file stream
         InputStream fis;

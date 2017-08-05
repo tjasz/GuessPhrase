@@ -53,6 +53,10 @@
     <string name = "category_not_found_head">Category file \"</string>
     <string name = "category_not_found_tail">\" not found.</string>
     <string name = "game_load_error">Error Loading Game</string>
+    <string name = "warning_category_in_saved_game">
+        This category is used by the saved game.
+        Deleting it will also delete the saved game.
+    </string>
 
     <string name="title_activity_add_category">Add Category</string>
     <string name="title_label">Title</string>

@@ -79,6 +79,14 @@ public class GameState {
         return category.getName();
     }
 
+    public String getCategoryPath() {
+        return category.getPath();
+    }
+
+    public boolean getIsCustomCategory() {
+        return isCustomCategory;
+    }
+
     // restore a game from the save file
     public void restoreGame() throws CategoryNotFoundException {
         // read game state from save file
