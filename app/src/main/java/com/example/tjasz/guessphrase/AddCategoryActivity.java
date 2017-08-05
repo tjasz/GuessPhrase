@@ -84,11 +84,17 @@ public class AddCategoryActivity extends ActionBarActivity {
         }
         else {
             finish();
-            new SaveCategoryTask().execute();
+            new SaveCategoryTask(titleEditText.getText().toString()).execute();
         }
     }
 
     private class SaveCategoryTask extends AsyncTask<Void, Void, Category> {
+        private String catName;
+
+        SaveCategoryTask(String name) {
+            catName = name;
+        }
+
         @Override
         protected void onPreExecute() {
 
@@ -98,9 +104,9 @@ public class AddCategoryActivity extends ActionBarActivity {
         protected Category doInBackground(Void... params) {
             // build a category object from the values of the edit texts
             Category cat = new Category(AddCategoryActivity.this);
-            cat.setName(titleEditText.getText().toString());
+            cat.setName(catName);
             cat.setIsCustom(true);
-            String filename = cat.getName().replaceAll("[^A-Za-z0-9]", "_") + ".json";
+            String filename = catName.replaceAll("[^A-Za-z0-9]", "_") + ".json";
             cat.setPath(filename);
             for (int i = 0; i < adapter.getCount(); i++) {
                 String title = adapter.getItem(i);
