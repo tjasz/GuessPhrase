@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -131,29 +132,52 @@ public class AddCategoryActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Category result) {
-            // create an intent to restart the SelectCategoryActivity
-            final Intent restartSelectCategoryActivityIntent =
-                    new Intent(AddCategoryActivity.this, SelectCategoryActivity.class);
-            // create a pending intent to encapsulate the restartSelectCategoryActivity intent
-            PendingIntent pi = PendingIntent.getActivity(
+            notifyCategorySaved(result);
+        }
+    }
+
+    private void notifyCategorySaved(final Category result) {
+        sendOrderedBroadcast(
+                new Intent(SelectCategoryActivity.CATEGORIES_REFRESH_ACTION),
+                null,
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        // if SelectCategoryActivity is not active, send notification
+                        if (getResultCode() != SelectCategoryActivity.IS_ACTIVE) {
+                            sendSystemNotification(result);
+                        }
+                    }
+                },
+                null,
+                RESULT_OK,
+                null,
+                null);
+    }
+
+    private void sendSystemNotification(Category result) {
+        // create an intent to restart the SelectCategoryActivity
+        final Intent restartSelectCategoryActivityIntent =
+                new Intent(AddCategoryActivity.this, SelectCategoryActivity.class);
+        // create a pending intent to encapsulate the restartSelectCategoryActivity intent
+        PendingIntent pi = PendingIntent.getActivity(
                 AddCategoryActivity.this,
                 MY_NOTIFICATION_ID,
                 restartSelectCategoryActivityIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
-            );
-            // build a notification to say the download has been completed
-            Notification.Builder notificationBuilder = new Notification.Builder(AddCategoryActivity.this)
-                    .setSmallIcon(android.R.drawable.stat_sys_download_done)
-                    .setAutoCancel(true)
-                    .setContentTitle(getResources().getString(R.string.category_saved))
-                    .setContentText("\"" + result.getName() + "\" " +
-                            getResources().getString(R.string.category_saved_detail))
-                    .setContentIntent(pi);
-            // send the notification
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(MY_NOTIFICATION_ID, notificationBuilder.build());
-        }
+        );
+        // build a notification to say the download has been completed
+        Notification.Builder notificationBuilder = new Notification.Builder(AddCategoryActivity.this)
+                .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                .setAutoCancel(true)
+                .setContentTitle(getResources().getString(R.string.category_saved))
+                .setContentText("\"" + result.getName() + "\" " +
+                        getResources().getString(R.string.category_saved_detail))
+                .setContentIntent(pi);
+        // send the notification
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(MY_NOTIFICATION_ID, notificationBuilder.build());
     }
 
     @Override

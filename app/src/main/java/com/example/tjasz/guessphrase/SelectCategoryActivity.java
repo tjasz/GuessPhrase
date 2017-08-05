@@ -1,9 +1,12 @@
 package com.example.tjasz.guessphrase;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -30,12 +33,15 @@ import java.util.ArrayList;
 
 public class SelectCategoryActivity extends ActionBarActivity {
     private static final int CONTEXT_DELETE = 0;
+    public static final int IS_ACTIVE = Activity.RESULT_FIRST_USER;
+    public static final String CATEGORIES_REFRESH_ACTION = "com.example.tjasz.guessphrase.CATEGORIES_REFRESH_ACTION";
 
     LinearLayout ll;
     ProgressBar pb;
     CategoryReferenceAdapter adapter;
     ListView listView;
     boolean visible;
+    private BroadcastReceiver refreshReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,18 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        refreshReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // if this is an ordered broadcast
+                // let sender know that SelectCategoryActivity received it
+                if (refreshReceiver.isOrderedBroadcast()) {
+                    setResultCode(IS_ACTIVE);
+                    // refresh categories; a new one has been saved
+                    new LoadCategoriesTask().execute(SelectCategoryActivity.this);
+                }
+            }
+        };
     }
 
     @Override
@@ -74,12 +92,20 @@ public class SelectCategoryActivity extends ActionBarActivity {
         // load the categories and create buttons for them
         new LoadCategoriesTask().execute(this);
         visible = true;
+        // register the receiver to receive a
+        // CATEGORIES_REFRESH_ACTION broadcast
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(CATEGORIES_REFRESH_ACTION);
+        registerReceiver(refreshReceiver, intentFilter);
     }
 
     @Override
     protected void onPause() {
         visible = false;
         super.onPause();
+        if (refreshReceiver != null) {
+            unregisterReceiver(refreshReceiver);
+        }
     }
 
     private class LoadCategoriesTask extends AsyncTask<SelectCategoryActivity, Void, ArrayList<Category>> {
