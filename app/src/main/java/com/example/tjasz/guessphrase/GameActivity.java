@@ -58,9 +58,6 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         timerText.setClickable(false);
         mainText.setVisibility(View.INVISIBLE);
         loadingWheel.setVisibility(View.VISIBLE);
-
-
-        new LoadAndStartGameTask(this, this).execute(getIntent());
     }
 
     private class LoadAndStartGameTask extends AsyncTask<Intent, Void, GameState> {
@@ -273,6 +270,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         visible = true;
         SharedPreferences preferences = getSharedPreferences(SettingsActivity.GAME_PREFERENCES, MODE_PRIVATE);
         shouldVibrate = preferences.getBoolean(SettingsActivity.VIBRATION_PREFERENCE_KEY, true);
+        new LoadAndStartGameTask(this, this).execute(getIntent());
     }
 
     public void nextItem(View v) {
