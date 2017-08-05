@@ -47,13 +47,13 @@
         When the timer runs out, the team not holding the device scores a point.
         The first team to 7 points wins.
     </string>
-    <string name = "confirm_delete_dialog_title">Confirm Deletion</string>
-    <string name = "confirm_delete_dialog_head">Are you sure you wish to delete the category \"</string>
-    <string name = "confirm_delete_dialog_tail">\"?</string>
-    <string name = "category_not_found_head">Category file \"</string>
-    <string name = "category_not_found_tail">\" not found.</string>
-    <string name = "game_load_error">Error Loading Game</string>
-    <string name = "warning_category_in_saved_game">
+    <string name="confirm_delete_dialog_title">Confirm Deletion</string>
+    <string name="confirm_delete_dialog_head">Are you sure you wish to delete the category \"</string>
+    <string name="confirm_delete_dialog_tail">\"?</string>
+    <string name="category_not_found_head">Category file \"</string>
+    <string name="category_not_found_tail">\" not found.</string>
+    <string name="game_load_error">Error Loading Game</string>
+    <string name="warning_category_in_saved_game">
         This category is used by the saved game.
         Deleting it will also delete the saved game.
     </string>
@@ -74,5 +74,10 @@
 
     <string name="delete">Delete</string>
     <string name="delete_default_category">Cannot delete default category.</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="action_edit_settings">Change Preferences</string>
+    <string name="vibration_checkbox_label">Vibrate</string>
+    <string name="done">Done</string>
 
 </resources>

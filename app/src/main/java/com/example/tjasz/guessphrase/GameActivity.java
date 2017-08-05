@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.audiofx.BassBoost;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -22,6 +26,8 @@ import java.util.ArrayList;
 
 public class GameActivity extends ActionBarActivity implements GameHandler {
 
+    public static final String GAME_PREFS = "gamePreferences";
+
     boolean visible;
     RelativeLayout loadingWheel;
     TextView categoryNameText, mainText, t1scoreText, t2scoreText, timerText;
@@ -30,6 +36,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
     GameState gameState;
     Vibrator vibrator;
     AudioManager audioManager;
+    boolean shouldVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +164,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
 
     public void onTimerStart() {
         // do quick initial vibrate
-        if (!(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
+        if (!(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT) && shouldVibrate) {
             vibrator.vibrate(100);
         }
         // update display
@@ -171,7 +178,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
 
     public void onTimerTick(long millisLeft) {
         // handle vibration pattern
-        if (!(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
+        if (!(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT) && shouldVibrate) {
             if (millisLeft > GameState.defaultTime/2 - 50) {
                 if (millisLeft % 2000 < 50) {
                     vibrator.vibrate(100);
@@ -196,7 +203,7 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
 
     public void onTimerFinish() {
         // do long vibrate
-        if (!(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
+        if (!(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT) && shouldVibrate) {
             vibrator.vibrate(2000);
         }
         // update display
@@ -264,6 +271,8 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
     public void onResume() {
         super.onResume();
         visible = true;
+        SharedPreferences preferences = getSharedPreferences(SettingsActivity.GAME_PREFERENCES, MODE_PRIVATE);
+        shouldVibrate = preferences.getBoolean(SettingsActivity.VIBRATION_PREFERENCE_KEY, true);
     }
 
     public void nextItem(View v) {
@@ -318,6 +327,30 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
                     }
                 });
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_game, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_edit_settings) {
+            Intent intent = new Intent(GameActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

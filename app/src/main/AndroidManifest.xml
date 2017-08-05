@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tjasz.guessphrase"
-    android:installLocation="auto" >
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,25 +13,25 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tjasz.guessphrase.SelectCategoryActivity" />
         </activity>
         <activity
             android:name=".SelectCategoryActivity"
-            android:label="@string/title_activity_select_category" >
+            android:label="@string/title_activity_select_category">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tjasz.guessphrase.MenuActivity" />
         </activity>
         <activity
             android:name=".MenuActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,10 +41,16 @@
         <activity
             android:name=".AddCategoryActivity"
             android:label="@string/title_activity_add_category"
-            android:parentActivityName=".SelectCategoryActivity" >
+            android:parentActivityName=".SelectCategoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tjasz.guessphrase.SelectCategoryActivity" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            >
+
         </activity>
     </application>
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.tjasz.guessphrase.GameActivity"
+    >
+
+    <item
+        android:id="@+id/action_edit_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/action_edit_settings"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>
