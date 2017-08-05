@@ -33,4 +33,11 @@
         android:onClick="showInstructions"
         />
 
+    <Button
+        android:text="@string/action_edit_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="openSettingsActivity"
+        />
+
 </LinearLayout>
