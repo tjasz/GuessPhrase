@@ -168,7 +168,7 @@ public class Category {
         OutputStream fos;
         PrintWriter writer = null;
         try {
-            fos = new FileOutputStream(new File(customCategoriesDir, name));
+            fos = new FileOutputStream(new File(customCategoriesDir, path));
             writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
                     fos)));
             writer.print(categoryJSON.toString());
