@@ -35,6 +35,7 @@ public class SelectCategoryActivity extends ActionBarActivity {
     ProgressBar pb;
     CategoryReferenceAdapter adapter;
     ListView listView;
+    boolean visible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,13 @@ public class SelectCategoryActivity extends ActionBarActivity {
         super.onResume();
         // load the categories and create buttons for them
         new LoadCategoriesTask().execute(this);
+        visible = true;
+    }
+
+    @Override
+    protected void onPause() {
+        visible = false;
+        super.onPause();
     }
 
     private class LoadCategoriesTask extends AsyncTask<SelectCategoryActivity, Void, ArrayList<Category>> {
