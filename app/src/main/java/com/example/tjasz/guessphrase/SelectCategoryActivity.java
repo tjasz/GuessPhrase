@@ -40,7 +40,6 @@ public class SelectCategoryActivity extends ActionBarActivity {
     ProgressBar pb;
     CategoryReferenceAdapter adapter;
     ListView listView;
-    boolean visible;
     private BroadcastReceiver refreshReceiver;
 
     @Override
@@ -91,7 +90,6 @@ public class SelectCategoryActivity extends ActionBarActivity {
         super.onResume();
         // load the categories and create buttons for them
         new LoadCategoriesTask().execute(this);
-        visible = true;
         // register the receiver to receive a
         // CATEGORIES_REFRESH_ACTION broadcast
         IntentFilter intentFilter = new IntentFilter();
@@ -101,7 +99,6 @@ public class SelectCategoryActivity extends ActionBarActivity {
 
     @Override
     protected void onPause() {
-        visible = false;
         super.onPause();
         if (refreshReceiver != null) {
             unregisterReceiver(refreshReceiver);
