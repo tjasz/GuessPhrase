@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class AddCategoryActivity extends ActionBarActivity {
     private static final int MINIMUM_SEARCH_TERM_LENGTH = 3;
@@ -106,7 +110,13 @@ public class AddCategoryActivity extends ActionBarActivity {
             Category cat = new Category(AddCategoryActivity.this);
             cat.setName(catName);
             cat.setIsCustom(true);
-            String filename = catName.replaceAll("[^A-Za-z0-9]", "_") + ".json";
+            // generate a filename based on category name and current datetime
+            String filename = catName.replaceAll("[^A-Za-z0-9]", "_");
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            Date date = new Date();
+            String dateString = dateFormat.format(date);
+            filename += "_" + dateString + ".json";
+            // set the filename to the category
             cat.setPath(filename);
             for (int i = 0; i < adapter.getCount(); i++) {
                 String title = adapter.getItem(i);
