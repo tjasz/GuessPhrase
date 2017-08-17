@@ -270,7 +270,12 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         visible = true;
         SharedPreferences preferences = getSharedPreferences(SettingsActivity.GAME_PREFERENCES, MODE_PRIVATE);
         shouldVibrate = preferences.getBoolean(SettingsActivity.VIBRATION_PREFERENCE_KEY, true);
-        new LoadAndStartGameTask(this, this).execute(getIntent());
+        if (gameState == null) {
+            new LoadAndStartGameTask(this, this).execute(getIntent());
+        }
+        else {
+            gameState.resumeTimer();
+        }
     }
 
     public void nextItem(View v) {
