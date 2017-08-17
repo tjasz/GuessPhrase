@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.audiofx.BassBoost;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -271,7 +272,13 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         SharedPreferences preferences = getSharedPreferences(SettingsActivity.GAME_PREFERENCES, MODE_PRIVATE);
         shouldVibrate = preferences.getBoolean(SettingsActivity.VIBRATION_PREFERENCE_KEY, true);
         if (gameState == null) {
-            new LoadAndStartGameTask(this, this).execute(getIntent());
+            // ensure task executes asynchronously
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+                new LoadAndStartGameTask(this, this).executeOnExecutor(
+                        AsyncTask.THREAD_POOL_EXECUTOR, getIntent());
+            } else {
+                new LoadAndStartGameTask(this, this).execute(getIntent());
+            }
         }
         else {
             gameState.resumeTimer();

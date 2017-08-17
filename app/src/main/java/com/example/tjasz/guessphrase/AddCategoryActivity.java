@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -89,7 +90,13 @@ public class AddCategoryActivity extends ActionBarActivity {
         }
         else {
             finish();
-            new SaveCategoryTask(titleEditText.getText().toString()).execute();
+            // ensure task executes asynchronously
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+                new SaveCategoryTask(titleEditText.getText().toString()).executeOnExecutor(
+                        AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                new SaveCategoryTask(titleEditText.getText().toString()).execute();
+            }
         }
     }
 
