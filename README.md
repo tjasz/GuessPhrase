@@ -17,7 +17,8 @@ Whenever gameplay is paused, the current game is written to the save file.
 In this way, if a call or other activity interrupts GuessPhrase,
 users can always get back to the game that was in progress at the time.
 
-![Main Menu Screen](https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_main_menu.png?raw=true "Main Menu Screen")
+Main Menu Screen
+<img src="https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_main_menu.png?raw=true" alt="Main Menu Screen" style="width: 200px;">
 
 ### Category Selection
 When the user opts to play a new game, they are asked to select a category to play.
@@ -27,7 +28,8 @@ A user may also choose to create a custom category,
 a process described in greater detail below.
 Once a category is selected, gameplay begins.
 
-![Select Category Screen](https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_select_category.png?raw=true "Select Category Screen")
+Select Category Screen
+<img src="https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_select_category.png?raw=true" alt="Select Category Screen" style="width: 200px;">
 
 ### Creating a Custom Category
 Custom categories in GuessPhrase are based off of the page links in Wikipedia pages.
@@ -37,7 +39,8 @@ To create a new category, the user is asked for a list of one or more Wikipedia 
 and a category name.
 The titles of each page linked to by the provided pages form the items in the new category.
 
-![Add Category Screen](https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_add_category.png?raw=true "Add Category Screen")
+Add Category Screen:
+<img src="https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_add_category.png?raw=true" alt="Add Category Screen" style="width: 200px;">
 
 ### Gameplay
 Like Hasbro's Catchphrase, GuessPhrase is a team-based phrase-guessing game.
@@ -52,11 +55,13 @@ A phrase may be skipped simply by tapping it to load a new one.
 Once the team of the current player says the phrase, s/he passes the device to the next person
 (who is on the other team)
 
-![Game Screen](https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_gameplay.png?raw=true "Game Screen")
+Game Screen:
+<img src="https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_gameplay.png?raw=true" alt="Game Screen" style="width: 200px;">
 
 Game play continues in this manner until the countdown timer stops.
 At this point, the player who was holding the device when the countdown stopped must give the opposing team a point.
 Then gameplay resumes as described above.
 The game ends when a team reaches 7 points and is declared the winner.
 
-![Dialog Asking for a Round Winner](https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_get_winner.png?raw=true "Dialog Asking for a Round Winner")
+Dialog Asking for a Round Winner:
+<img src="https://github.com/tjasz/GuessPhrase/blob/master/pic/screenshot_get_winner.png?raw=true" alt="Dialog Asking for a Round Winner" style="width: 200px;">
