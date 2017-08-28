@@ -4,14 +4,16 @@ One notable difference, besides the mobile interface, from Hasbro's game is that
 GuessPhrase allows the user to add custom categories.
 The primary user interface components are described below.
 
-## Main Menu
+## Usage
+
+### Main Menu
 When the application loads, a main menu is shown, giving the user two options:
 to start a new game, or to resume a previously started one (if a saved game exists).
 Whenever gameplay is paused, the current game is written to the save file.
 In this way, if a call or other activity interrupts GuessPhrase,
 users can always get back to the game that was in progress at the time.
 
-## Category Selection
+### Category Selection
 When the user opts to play a new game, they are asked to select a category to play.
 The list includes the default categories that ship with GuessPhrase
 as well as any custom categories previously created by the user.
@@ -19,7 +21,7 @@ A user may also choose to create a custom category,
 a process described in greater detail below.
 Once a category is selected, gameplay begins.
 
-## Creating a Custom Category
+### Creating a Custom Category
 Custom categories in GuessPhrase are based off of the page links in Wikipedia pages.
 Ideally, the set of Wiki pages linked to from another page form a collection of related words and phrases.
 This idea is the basis for creation of categories.
@@ -27,7 +29,7 @@ To create a new category, the user is asked for a list of one or more Wikipedia 
 and a category name.
 The titles of each page linked to by the provided pages form the items in the new category.
 
-## Gameplay
+### Gameplay
 Like Hasbro's Catchphrase, GuessPhrase is a team-based phrase-guessing game.
 An even number of players split into two teams.
 The players arrange themselves in a circle such that no one is sitting/standing adjacent to any of their teammates.
