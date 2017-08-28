@@ -4,6 +4,10 @@ One notable difference, besides the mobile interface, from Hasbro's game is that
 GuessPhrase allows the user to add custom categories.
 The primary user interface components are described below.
 
+## Download and Install
+
+GuessPhrase can be downloaded and installed from the [Google Play Store](https://play.google.com/store/apps/details?id=com.hotmail.nukorausa.guessphrase).
+
 ## Usage
 
 ### Main Menu
