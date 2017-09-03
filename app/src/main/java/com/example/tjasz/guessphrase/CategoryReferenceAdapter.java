@@ -124,16 +124,8 @@ class CategoryReferenceAdapter extends BaseAdapter {
         return newView;
     }
 
-    public void add(Category cat) {
-        list.add(cat);
-    }
-
     void addAll(Collection<Category> items) {
         list.addAll(items);
-    }
-
-    public void removeAtPosition(int position) {
-        list.remove(position);
     }
 
     void removeAll() {
