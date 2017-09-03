@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class GameActivity extends ActionBarActivity implements GameHandler {
@@ -189,9 +190,9 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         }
         // update timerText display
         if (millisLeft > GameState.defaultTime/2) {
-            timerText.setText(Long.toString(millisLeft/1000));
+            timerText.setText(String.format(Locale.US, "%d", millisLeft/1000));
         } else {
-            timerText.setText(millisLeft/1000 + "." + millisLeft/100 % 10);
+            timerText.setText(String.format(Locale.US, "%d.%d", millisLeft/1000, millisLeft/100 % 10));
         }
     }
 
