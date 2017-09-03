@@ -1,7 +1,6 @@
 package com.example.tjasz.guessphrase;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.CountDownTimer;
 
 import org.json.JSONException;
@@ -21,69 +20,67 @@ import java.io.PrintWriter;
  * and define actions related to changing
  * and accessing the state.
  */
-public class GameState {
-    public static final int defaultTime = 60000;
+class GameState {
+    static final int defaultTime = 60000;
     private static final int winningScore = 7;
 
-    Boolean isTimerRunning;
-    int t1score, t2score;
-    long millisLeft;
+    private Boolean isTimerRunning;
+    private int t1score, t2score;
+    private long millisLeft;
 
-    Category category;
-    CountDownTimer timer;
-    Context myContext;
-    GameHandler myGameHandler;
+    private Category category;
+    private CountDownTimer timer;
+    private Context myContext;
+    private GameHandler myGameHandler;
 
-    boolean isCustomCategory;
-    String categoryPath;
-    AssetManager assetManager;
+    private boolean isCustomCategory;
+    private String categoryPath;
 
-    public GameState(Context context, GameHandler gameHandler) {
+    GameState(Context context, GameHandler gameHandler) {
         myContext = context;
         myGameHandler = gameHandler;
         isTimerRunning = false;
-        assetManager = myContext.getAssets();
     }
 
-    public boolean getIsTimerRunning() {
+    boolean getIsTimerRunning() {
         return isTimerRunning;
     }
 
-    public int getT1score() {
+    int getT1score() {
         return t1score;
     }
 
-    public int getT2score() {
+    int getT2score() {
         return t2score;
     }
 
-    public boolean hasT1won() {
+    boolean hasT1won() {
         return (t1score >= winningScore);
     }
 
-    public boolean hasT2won() {
+    boolean hasT2won() {
         return (t2score >= winningScore);
     }
 
     // get a random item from the items list
-    public String getNextItem() {
+    String getNextItem() {
         return category.getRandomItem();
     }
 
-    public String getCategoryName() {
+    String getCategoryName() {
         return category.getName();
     }
 
-    public String getCategoryPath() {
+    String getCategoryPath() {
         return category.getPath();
     }
 
-    public boolean getIsCustomCategory() {
+    boolean getIsCustomCategory() {
         return isCustomCategory;
     }
 
     // restore a game from the save file
-    public void restoreGame() throws CategoryNotFoundException {
+    void restoreGame() throws CategoryNotFoundException {
         // read game state from save file
         String saveString = "";
         BufferedReader reader = null;
@@ -128,7 +125,7 @@ public class GameState {
     }
 
     // load a new game with categoryBools as given
-    public void loadNewGame(boolean newIsCustom, String newCategoryPath) {
+    void loadNewGame(boolean newIsCustom, String newCategoryPath) {
         resetGame();
         isCustomCategory = newIsCustom;
         categoryPath = newCategoryPath;
@@ -146,7 +143,7 @@ public class GameState {
     }
 
     // save the game state to the save file
-    public void saveGameToFile() {
+    void saveGameToFile() {
         // collect game state in JSON object
         JSONObject gameState = new JSONObject();
         try {
@@ -178,24 +175,24 @@ public class GameState {
     }
 
     // reset the scores and timer to begin a new game with the same items
-    public void resetGame() {
+    void resetGame() {
         t1score = 0;
         t2score = 0;
         millisLeft = defaultTime;
     }
 
-    public int incrementT1score() {
+    int incrementT1score() {
         t1score++;
         return t1score;
     }
 
-    public int incrementT2score() {
+    int incrementT2score() {
         t2score++;
         return t1score;
     }
 
     // resume the timer based on millisLeft
-    public void resumeTimer() {
+    void resumeTimer() {
         if (!isTimerRunning) {
             timer = new CountDownTimer(millisLeft, 50) {
                 public void onTick(long millisUntilFinished) {
@@ -216,7 +213,7 @@ public class GameState {
     }
 
     // pause the timer
-    public void pauseTimer() {
+    void pauseTimer() {
         if (isTimerRunning) {
             timer.cancel();
             isTimerRunning = Boolean.FALSE;
