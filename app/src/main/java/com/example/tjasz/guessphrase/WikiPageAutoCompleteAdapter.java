@@ -47,7 +47,7 @@ public class WikiPageAutoCompleteAdapter extends BaseAdapter implements Filterab
 
     @Override
     public Filter getFilter() {
-        final Filter filter = new Filter() {
+        return new Filter() {
             @Override
             // note: invoked in a worker thread automatically
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -73,6 +73,5 @@ public class WikiPageAutoCompleteAdapter extends BaseAdapter implements Filterab
                 }
             }
         };
-        return filter;
     }
 }
