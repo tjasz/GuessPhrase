@@ -117,10 +117,10 @@ public class SelectCategoryActivity extends ActionBarActivity {
             AssetManager am = getAssets();
             try {
                 String[] assets = am.list("category");
-                for (int i = 0; i < assets.length; i++) {
+                for (String asset : assets) {
                     Category cat = new Category(SelectCategoryActivity.this);
                     cat.setIsCustom(false);
-                    cat.setPath(assets[i]);
+                    cat.setPath(asset);
                     cat.readJSONFile();
                     result.add(cat);
                 }
@@ -134,10 +134,10 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 customCategoryDir.mkdir();
             }
             String[] customCategoryFiles = customCategoryDir.list();
-            for (int i = 0; i < customCategoryFiles.length; i++) {
+            for (String customCategoryFile : customCategoryFiles) {
                 Category cat = new Category(SelectCategoryActivity.this);
                 cat.setIsCustom(true);
-                cat.setPath(customCategoryFiles[i]);
+                cat.setPath(customCategoryFile);
                 try {
                     cat.readJSONFile();
                 }
