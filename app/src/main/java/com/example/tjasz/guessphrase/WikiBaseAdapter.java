@@ -12,13 +12,11 @@ import java.util.ArrayList;
 
 class WikiBaseAdapter extends BaseAdapter {
 
-    private Context myContext;
     private static LayoutInflater inflater;
     private ArrayList<String> arrayList;
 
     WikiBaseAdapter(Context context) {
-        myContext = context;
-        inflater = LayoutInflater.from(myContext);
+        inflater = LayoutInflater.from(context);
         arrayList = new ArrayList<>();
     }
 
