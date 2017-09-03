@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class AddCategoryActivity extends ActionBarActivity {
@@ -115,7 +116,7 @@ public class AddCategoryActivity extends ActionBarActivity {
             cat.setIsCustom(true);
             // generate a filename based on category name and current datetime
             String filename = catName.replaceAll("[^A-Za-z0-9]", "_");
-            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
             Date date = new Date();
             String dateString = dateFormat.format(date);
             filename += "_" + dateString + ".json";
