@@ -19,7 +19,6 @@ import android.media.AudioManager;
 import android.os.Vibrator;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
