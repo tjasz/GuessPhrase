@@ -16,10 +16,10 @@ import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class Wikipedia {
+class Wikipedia {
     private static final String BASE_URI = "https://en.wikipedia.org/w/api.php?format=json";
 
-    public static HashSet<String> getLinks(String pageName) {
+    static HashSet<String> getLinks(String pageName) {
         boolean hasMore = true;
         String nextPage = null;
         HashSet<String> linksList = new HashSet<>();
@@ -61,7 +61,7 @@ public class Wikipedia {
         return linksList;
     }
 
-    public static HashSet<String> search(String pageName, int numResults) {
+    static HashSet<String> search(String pageName, int numResults) {
         HashSet<String> resultTitles = new HashSet<>();
         try {
             // form query string
@@ -82,7 +82,7 @@ public class Wikipedia {
         return resultTitles;
     }
 
-    public static String query(String URI) {
+    private static String query(String URI) {
         String data = "";
         HttpURLConnection huc = null;
         try {
