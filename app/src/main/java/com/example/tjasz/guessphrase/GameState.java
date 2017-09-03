@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.Random;
 
 /**
  * Track the state of a game
@@ -31,7 +30,6 @@ public class GameState {
     long millisLeft;
 
     Category category;
-    Random generator;
     CountDownTimer timer;
     Context myContext;
     GameHandler myGameHandler;
@@ -43,7 +41,6 @@ public class GameState {
     public GameState(Context context, GameHandler gameHandler) {
         myContext = context;
         myGameHandler = gameHandler;
-        generator = new Random();
         isTimerRunning = false;
         assetManager = myContext.getAssets();
     }
