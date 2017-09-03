@@ -14,12 +14,12 @@ import android.widget.Filter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WikiPageAutoCompleteAdapter extends BaseAdapter implements Filterable {
+class WikiPageAutoCompleteAdapter extends BaseAdapter implements Filterable {
     private static final int MAX_RESULTS = 10;
     private Context myContext;
     private List<String> resultList = new ArrayList<>();
 
-    public WikiPageAutoCompleteAdapter(Context context) {
+    WikiPageAutoCompleteAdapter(Context context) {
         myContext = context;
     }
 
