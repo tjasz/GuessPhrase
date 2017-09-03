@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 
 public class SelectCategoryActivity extends ActionBarActivity {
-    private static final int CONTEXT_DELETE = 0;
     public static final int IS_ACTIVE = Activity.RESULT_FIRST_USER;
     public static final String CATEGORIES_REFRESH_ACTION = "com.example.tjasz.guessphrase.CATEGORIES_REFRESH_ACTION";
 
