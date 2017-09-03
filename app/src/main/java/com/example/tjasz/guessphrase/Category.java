@@ -23,15 +23,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
-public class Category {
-    Context myContext;
-    File customCategoriesDir;
+class Category {
+    private Context myContext;
+    private File customCategoriesDir;
 
     private String name;
-    boolean isCustom;
-    String path;
+    private boolean isCustom;
+    private String path;
     private ArrayList<String> items;
-    Random generator;
+    private Random generator;
 
     Category(Context context) {
         generator = new Random();
@@ -43,7 +43,7 @@ public class Category {
         name = newName;
     }
 
-    public void addItems(Collection<String> newItems) {
+    void addItems(Collection<String> newItems) {
         if (items == null) {
             items = new ArrayList<>();
         }
@@ -54,27 +54,27 @@ public class Category {
         return name;
     }
 
-    public String getRandomItem() {
+    String getRandomItem() {
         return items.get(generator.nextInt(items.size()));
     }
 
-    public void setIsCustom(boolean newIsCustom) {
+    void setIsCustom(boolean newIsCustom) {
         isCustom = newIsCustom;
     }
 
-    public boolean getIsCustom() {
+    boolean getIsCustom() {
         return isCustom;
     }
 
-    public void setPath(String newPath) {
+    void setPath(String newPath) {
         path = newPath;
     }
 
-    public String getPath() {
+    String getPath() {
         return path;
     }
 
-    public boolean isInSavedGame() {
+    boolean isInSavedGame() {
         // return true if game save file exists and uses this category
         if (myContext.getFileStreamPath(myContext.getResources().getString(R.string.game_save_file_name)).exists()) {
             GameState gs = new GameState(myContext, null);
@@ -93,7 +93,7 @@ public class Category {
         return false;
     }
 
-    public void readJSONFile() throws CategoryNotFoundException {
+    void readJSONFile() throws CategoryNotFoundException {
         // open file stream
         InputStream fis;
         if (isCustom) {
@@ -153,7 +153,7 @@ public class Category {
         }
     }
 
-    public void writeJSONFile() {
+    void writeJSONFile() {
         // collect category attributes in JSON object
         JSONObject categoryJSON = new JSONObject();
         try {
@@ -183,7 +183,7 @@ public class Category {
         }
     }
 
-    public void deleteFile() {
+    void deleteFile() {
         if (isCustom) {
             File file = new File(customCategoriesDir, getPath());
             file.delete();
