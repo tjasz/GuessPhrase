@@ -186,7 +186,9 @@ class Category {
     void deleteFile() {
         if (isCustom) {
             File file = new File(customCategoriesDir, getPath());
-            file.delete();
+            if (!(file.delete())) {
+                throw new RuntimeException("Failed to delete file " + file.getPath());
+            }
         }
     }
 }

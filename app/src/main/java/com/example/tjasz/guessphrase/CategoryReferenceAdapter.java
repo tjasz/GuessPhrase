@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -79,8 +80,11 @@ public class CategoryReferenceAdapter extends BaseAdapter {
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // delete file
-                                        myContext.getFileStreamPath(myContext.getResources()
-                                                .getString(R.string.game_save_file_name)).delete();
+                                        File game_save_file = myContext.getFileStreamPath(myContext.getResources()
+                                                .getString(R.string.game_save_file_name));
+                                        if (!(game_save_file.delete())) {
+                                            throw new RuntimeException("Failed to delete file " + game_save_file.getPath());
+                                        }
                                         cat.deleteFile();
                                         list.remove(thisPos);
                                         notifyDataSetChanged();

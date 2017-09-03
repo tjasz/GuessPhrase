@@ -233,7 +233,9 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         @Override
         protected void onPreExecute() {
             File game_save_file = getFileStreamPath(getResources().getString(R.string.game_save_file_name));
-            game_save_file.delete();
+            if (!(game_save_file.delete())) {
+                throw new RuntimeException("Failed to delete file " + game_save_file.getPath());
+            }
         }
 
         @Override
