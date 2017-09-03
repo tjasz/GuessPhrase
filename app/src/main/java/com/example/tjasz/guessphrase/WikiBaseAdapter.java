@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class WikiBaseAdapter extends BaseAdapter {
+class WikiBaseAdapter extends BaseAdapter {
 
     private Context myContext;
     private static LayoutInflater inflater;
     private ArrayList<String> arrayList;
 
-    public WikiBaseAdapter(Context context) {
+    WikiBaseAdapter(Context context) {
         myContext = context;
         inflater = LayoutInflater.from(myContext);
         arrayList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class WikiBaseAdapter extends BaseAdapter {
         return newView;
     }
 
-    public void add(String str) {
+    void add(String str) {
         arrayList.add(str);
         notifyDataSetChanged();
     }
