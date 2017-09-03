@@ -48,7 +48,7 @@ public class SelectCategoryActivity extends ActionBarActivity {
         adapter = new CategoryReferenceAdapter(this);
         listView = (ListView) findViewById(R.id.category_list_view);
         View footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.view_footer_add_category, null, false);
+                .inflate(R.layout.view_footer_add_category, listView, false);
         listView.addFooterView(footerView);
         listView.setAdapter(adapter);
 
