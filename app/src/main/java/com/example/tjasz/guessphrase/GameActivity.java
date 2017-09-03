@@ -272,13 +272,8 @@ public class GameActivity extends ActionBarActivity implements GameHandler {
         SharedPreferences preferences = getSharedPreferences(SettingsActivity.GAME_PREFERENCES, MODE_PRIVATE);
         shouldVibrate = preferences.getBoolean(SettingsActivity.VIBRATION_PREFERENCE_KEY, true);
         if (gameState == null) {
-            // ensure task executes asynchronously
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
-                new LoadAndStartGameTask(this, this).executeOnExecutor(
+            new LoadAndStartGameTask(this, this).executeOnExecutor(
                         AsyncTask.THREAD_POOL_EXECUTOR, getIntent());
-            } else {
-                new LoadAndStartGameTask(this, this).execute(getIntent());
-            }
         }
         else {
             gameState.resumeTimer();

@@ -90,13 +90,8 @@ public class AddCategoryActivity extends ActionBarActivity {
         }
         else {
             finish();
-            // ensure task executes asynchronously
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
-                new SaveCategoryTask(titleEditText.getText().toString()).executeOnExecutor(
+            new SaveCategoryTask(titleEditText.getText().toString()).executeOnExecutor(
                         AsyncTask.THREAD_POOL_EXECUTOR);
-            } else {
-                new SaveCategoryTask(titleEditText.getText().toString()).execute();
-            }
         }
     }
 

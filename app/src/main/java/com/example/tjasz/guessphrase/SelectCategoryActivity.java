@@ -80,13 +80,8 @@ public class SelectCategoryActivity extends ActionBarActivity {
                 if (refreshReceiver.isOrderedBroadcast()) {
                     setResultCode(IS_ACTIVE);
                     // refresh categories; a new one has been saved
-                    // ensure task executes asynchronously
-                    if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
-                        new LoadCategoriesTask().executeOnExecutor(
+                    new LoadCategoriesTask().executeOnExecutor(
                                 AsyncTask.THREAD_POOL_EXECUTOR, SelectCategoryActivity.this);
-                    } else {
-                        new LoadCategoriesTask().execute(SelectCategoryActivity.this);
-                    }
                 }
             }
         };
@@ -96,13 +91,8 @@ public class SelectCategoryActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         // load the categories and create buttons for them
-        // ensure task executes asynchronously
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
-            new LoadCategoriesTask().executeOnExecutor(
+        new LoadCategoriesTask().executeOnExecutor(
                     AsyncTask.THREAD_POOL_EXECUTOR, this);
-        } else {
-            new LoadCategoriesTask().execute(this);
-        }
         // register the receiver to receive a
         // CATEGORIES_REFRESH_ACTION broadcast
         IntentFilter intentFilter = new IntentFilter();
