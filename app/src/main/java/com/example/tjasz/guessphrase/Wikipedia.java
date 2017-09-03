@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashSet;
@@ -56,10 +55,7 @@ public class Wikipedia {
                 }
             }
         }
-        catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-        catch (JSONException e) {
+        catch (UnsupportedEncodingException|JSONException e) {
             throw new RuntimeException(e);
         }
         return linksList;
@@ -80,10 +76,7 @@ public class Wikipedia {
                 resultTitles.add(pages.getJSONObject(i).getString("title"));
             }
         }
-        catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-        catch (JSONException e) {
+        catch (UnsupportedEncodingException|JSONException e) {
             throw new RuntimeException(e);
         }
         return resultTitles;
@@ -96,9 +89,6 @@ public class Wikipedia {
             huc = (HttpURLConnection) new URL(BASE_URI + URI).openConnection();
             InputStream in = new BufferedInputStream(huc.getInputStream());
             data = readStream(in);
-        }
-        catch (MalformedURLException e) {
-            throw new RuntimeException(e);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
