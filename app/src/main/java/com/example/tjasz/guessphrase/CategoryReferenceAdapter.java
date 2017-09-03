@@ -15,12 +15,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CategoryReferenceAdapter extends BaseAdapter {
+class CategoryReferenceAdapter extends BaseAdapter {
     private Context myContext;
     private static LayoutInflater inflater = null;
     private ArrayList<Category> list;
 
-    public CategoryReferenceAdapter(Context context) {
+    CategoryReferenceAdapter(Context context) {
         myContext = context;
         inflater = LayoutInflater.from(myContext);
         list = new ArrayList<>();
@@ -128,7 +128,7 @@ public class CategoryReferenceAdapter extends BaseAdapter {
         list.add(cat);
     }
 
-    public void addAll(Collection<Category> items) {
+    void addAll(Collection<Category> items) {
         list.addAll(items);
     }
 
@@ -136,7 +136,7 @@ public class CategoryReferenceAdapter extends BaseAdapter {
         list.remove(position);
     }
 
-    public void removeAll() {
+    void removeAll() {
         list.clear();
     }
 }
