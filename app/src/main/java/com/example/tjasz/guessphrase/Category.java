@@ -23,6 +23,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+/**
+ * This class contains and tracks data about a category of phrases:
+ * its name, whether or not it is user-created, the file path associated with it,
+ * and member phrases.
+ * The ability to read, write, and delete the JSON files describing categories
+ * is also handled by this class.
+ */
+
 class Category {
     private Context myContext;
     private File customCategoriesDir;

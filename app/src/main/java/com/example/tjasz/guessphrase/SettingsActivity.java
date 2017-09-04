@@ -6,6 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.CheckBox;
 
+/**
+ * This activity allows a user to edit the shared game preferences,
+ * namely whether or not timer events induce vibration.
+ */
+
 public class SettingsActivity extends ActionBarActivity {
 
     public static final String GAME_PREFERENCES = "gamePrefs";

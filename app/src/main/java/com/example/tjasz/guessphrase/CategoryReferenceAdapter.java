@@ -15,6 +15,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * This adapter is used in ListViews to display a dynamic list of Categories.
+ * It must handle the behavior of the delete button.
+ */
+
 class CategoryReferenceAdapter extends BaseAdapter {
     private Context myContext;
     private static LayoutInflater inflater = null;

@@ -16,10 +16,15 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 /**
- * Track the state of a game
- * and define actions related to changing
- * and accessing the state.
+ * This class tracks the state of a game,
+ * including score, timer state, and the category.
+ * Methods allow for incrementing either score,
+ * pausing and resuming the timer,
+ * and resetting the game.
+ * Methods to load a previously saved state,
+ * create a new game, or save a game state to a file also exist.
  */
+
 class GameState {
     static final int defaultTime = 60000;
     private static final int winningScore = 7;

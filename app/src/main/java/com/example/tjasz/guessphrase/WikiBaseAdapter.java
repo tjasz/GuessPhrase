@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * This adapter is used in ListViews to display a dynamic list of Wikipedia pages.
+ */
+
 class WikiBaseAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater;

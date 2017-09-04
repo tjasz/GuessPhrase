@@ -22,6 +22,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * This activity is where the main game play occurs.
+ * It allows users to interact with a game state,
+ * and updates them on the current game state with text and vibrations.
+ * Games are loaded if necessary and resumed when the activity resumes.
+ * Games are saved to the game save file when the activity is paused.
+ * Dialogs ask for the winner of a round, or inform the users when a game is over.
+ */
 
 public class GameActivity extends ActionBarActivity implements GameHandler {
 

@@ -26,6 +26,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This activity allows the user to select a category when creating a new game.
+ * The list of categories, both default and custom, is loaded asynchronously
+ * and shown in a dynamic ListView through a CategoryReferenceAdapter.
+ * An option to add a new category and open AddCategoryActivity is presented.
+ * If this activity is active when a new category is downloaded,
+ * the category list is refreshed automatically.
+ */
 
 public class SelectCategoryActivity extends ActionBarActivity {
     public static final int IS_ACTIVE = Activity.RESULT_FIRST_USER;

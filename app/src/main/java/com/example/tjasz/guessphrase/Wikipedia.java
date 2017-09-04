@@ -16,6 +16,13 @@ import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Iterator;
 
+/**
+ * This class wraps the WikiMedia API for use in collecting data from Wikipedia.
+ * Package-private methods include one for getting search results
+ * and one for getting the page links on a Wikipedia page.
+ * Private methods handle the actual querying process.
+ */
+
 class Wikipedia {
     private static final String BASE_URI = "https://en.wikipedia.org/w/api.php?format=json";
 

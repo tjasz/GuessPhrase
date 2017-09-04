@@ -15,6 +15,11 @@ import android.widget.Button;
 
 import java.io.File;
 
+/**
+ * This is the main menu activity.
+ * User options available are: new game, resume game, how to play, and change preferences.
+ * The "How to play" button will show a dialog, but the other three options start another activity.
+ */
 
 public class MenuActivity extends ActionBarActivity {
 

@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 
+/**
+ * This custom AutoCompleteTextView waits for a delay in typing before showing suggestions.
+ */
+
 public class DelayAutoCompleteTextView extends AutoCompleteTextView {
     private static final int MESSAGE_TEXT_CHANGED = 100;
     private static final int DEFAULT_AUTOCOMPLETE_DELAY = 750;

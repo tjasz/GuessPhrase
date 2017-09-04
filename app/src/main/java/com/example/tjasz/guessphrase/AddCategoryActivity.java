@@ -24,6 +24,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * This activity allows users to create a custom category
+ * based on page links in related Wikipedia pages.
+ * This is accomplished by allowing users to search for Wikipedia pages
+ * in a DelayAutoCompleteTextView through a WikiPageAutoCompleteAdapter.
+ * Selected items are then shown in a ListView through a WikiBaseAdapter.
+ * Category files are saved asynchronously when the user taps "Save".
+ * When the download is completed: if SelectCategoryActivity is active,
+ * the category list is refershed; if SelectCategoryActivity is not active,
+ * a notification is shown to the user with an action that reopens SelectCategoryActivity.
+ */
 
 public class AddCategoryActivity extends ActionBarActivity {
     private static final int MINIMUM_SEARCH_TERM_LENGTH = 3;

@@ -1,8 +1,5 @@
 package com.example.tjasz.guessphrase;
 
-// a custom adapter for use in auto-complete text views
-// http://makovkastar.github.io/blog/2014/04/12/android-autocompletetextview-with-suggestions-from-a-web-service/
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +10,12 @@ import android.widget.Filter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * This filterable adapter displays results from Wikipedia searches.
+ * It is useful in auto-complete text views and based off of
+ * http://makovkastar.github.io/blog/2014/04/12/android-autocompletetextview-with-suggestions-from-a-web-service/
+ */
 
 class WikiPageAutoCompleteAdapter extends BaseAdapter implements Filterable {
     private static final int MAX_RESULTS = 10;
