@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/remove_wiki_base_button"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:text="@string/remove_wiki_base"
         android:textColor="#ff0000"
         android:textStyle="bold"
@@ -18,8 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/wiki_base_text_view"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@id/remove_wiki_base_button"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@id/remove_wiki_base_button"
         />
 
 </RelativeLayout>

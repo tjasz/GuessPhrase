@@ -15,9 +15,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/t1score"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/t1label"
         android:layout_alignEnd="@+id/t1label"
         android:textSize="24dp"
         android:text="0"
@@ -29,9 +27,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/t2score"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/t2label"
         android:layout_alignStart="@+id/t2label"
         android:layout_centerHorizontal="true"
         android:textSize="24dp"
@@ -48,7 +44,6 @@
         android:textColor="#008000"
         android:id="@+id/t1label"
         android:layout_above="@+id/t1score"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -59,7 +54,6 @@
         android:textColor="#000080"
         android:id="@+id/t2label"
         android:layout_above="@+id/t2score"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <TextView
@@ -82,9 +76,7 @@
         android:text="Example Item"
         android:gravity="center"
         android:textAlignment="gravity"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/category_name"
         android:layout_alignBottom="@+id/t2label"
@@ -96,9 +88,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textAlignment="gravity"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@+id/t2score"
@@ -123,7 +113,7 @@
         android:textAlignment="gravity"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@+id/t1label"
-        android:layout_toLeftOf="@+id/t2label" />
+        android:layout_toEndOf="@+id/t1label"
+        android:layout_toStartOf="@+id/t2label" />
 
 </RelativeLayout>
