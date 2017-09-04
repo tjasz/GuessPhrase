@@ -11,6 +11,7 @@
         android:id="@+id/delete_category_icon"
         android:layout_alignParentEnd="true"
         android:src="@android:drawable/ic_menu_delete"
+        android:contentDescription="@string/delete"
         />
 
     <TextView
