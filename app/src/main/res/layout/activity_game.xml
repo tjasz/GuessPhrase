@@ -71,7 +71,6 @@
         android:textSize="48sp"
         android:onClick="nextItem"
         android:clickable="true"
-        android:text="Example Item"
         android:gravity="center"
         android:textAlignment="gravity"
         android:layout_alignParentStart="true"
